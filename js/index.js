@@ -62,7 +62,7 @@ var app = {
                 */
                 document.getElementById("info").innerHTML = args.text;
 
-                if(args.text == "www.tcdpdf.org"){
+                if(args.text == "www.tcpdf.org"){
                     alert("super");
                 }
 
