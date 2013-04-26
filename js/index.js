@@ -49,6 +49,13 @@ var app = {
     },
     scan: function() {
         console.log('scanning');
+
+        var barcodeElement = document.querySelector('.barcode');
+        var barcode_errorElement = document.querySelector('.barcode_error');
+
+        barcodeElement.setAttribute('style', 'display:none;');
+        barcode_errorElement.setAttribute('style', 'display:none;');
+
         try {
             window.plugins.barcodeScanner.scan(function(args) {
                 console.log("Scanner result: \n" +
@@ -63,8 +70,9 @@ var app = {
                 document.getElementById("info").innerHTML = args.text;
 
                 if(args.text == "www.tcpdf.org"){
-                    var barcodeElement = document.querySelector('.barcode');
                     barcodeElement.setAttribute('style', 'display:block;');
+                }else{
+                    barcode_errorElement.setAttribute('style', 'display:block;');
                 }
 
                 console.log(args);

@@ -97,6 +97,11 @@ h1 {
 }
 
 .event.barcode {
+    background-color:#00FF00;
+    display:none;
+}
+
+.event.barcode_erroe {
     background-color:#FF0000;
     display:none;
 }
