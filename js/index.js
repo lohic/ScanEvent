@@ -63,7 +63,7 @@ var app = {
                 document.getElementById("info").innerHTML = args.text;
 
                 if(args.text == "www.tcpdf.org"){
-                    var barcodeElement = parentElement.querySelector('.barcode');
+                    var barcodeElement = document.querySelector('.barcode');
                     barcodeElement.setAttribute('style', 'display:block;');
                 }
 
