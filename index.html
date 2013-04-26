@@ -31,6 +31,7 @@
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
+                <p class="event barcode">Code barre OK</p>
             </div>
             <p><a href="#" id="scan">SCAN SOMETHING!</a></p>
             <p id="info"></p>
@@ -41,6 +42,10 @@
                 
             </form>
 
+            <div id="param">
+                You have run this app <span id="count">an untold number of</span> time(s).
+            </div>
+
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="barcodescanner.js"></script>
@@ -48,6 +53,15 @@
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
+        </script>
+
+
+        <script>
+        if (!localStorage.pageLoadCount) {
+            localStorage.pageLoadCount = 0;
+        }
+        localStorage.pageLoadCount = parseInt(localStorage.pageLoadCount) + 1;
+        document.getElementById('count').textContent = localStorage.pageLoadCount;
         </script>
     </body>
 </html>

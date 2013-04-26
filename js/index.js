@@ -41,6 +41,7 @@ var app = {
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
+        var barcodeElement = parentElement.querySelector('.barcode');
 
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
@@ -63,7 +64,7 @@ var app = {
                 document.getElementById("info").innerHTML = args.text;
 
                 if(args.text == "www.tcpdf.org"){
-                    alert("super");
+                    barcodeElement.setAttribute('style', 'display:block;');
                 }
 
                 console.log(args);
