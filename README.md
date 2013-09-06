@@ -27,7 +27,8 @@ POUR LA GESTION DES LONGUES LISTES:
 <<<<<<< HEAD
 
 `net.formidable-studio.scanevent2cordova`
-=======
+
+
 Sur les problèmes de requêtes avec LEFT OUTER JOIN:
 - http://www.developpez.net/forums/d39571/bases-donnees/mysql/requetes/probleme-performance-avec-left-outer-join/
 > dev_ScanEvent
