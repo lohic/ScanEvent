@@ -36,4 +36,11 @@ Sur les problèmes de requêtes avec LEFT OUTER JOIN:
 - http://www.developpez.net/forums/d39571/bases-donnees/mysql/requetes/probleme-performance-avec-left-outer-join/
 > dev_ScanEvent
 
-ok
+JSON ou JSONP avec serveur distant :
+- http://stackoverflow.com/questions/9048213/what-is-the-best-way-to-communicate-with-a-server-using-phonegap
+- http://stackoverflow.com/questions/613962/is-jsonp-safe-to-use
+- http://remysharp.com/2007/10/08/what-is-jsonp/
+- http://bob.ippoli.to/archives/2005/12/05/remote-json-jsonp/
+- http://api.jquery.com/jQuery.ajax/
+- http://en.wikipedia.org/wiki/JSONP
+- http://stackoverflow.com/questions/3506208/jquery-ajax-cross-domain
