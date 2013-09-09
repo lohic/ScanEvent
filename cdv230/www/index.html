@@ -16,11 +16,13 @@
              <link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />
              <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />
              -->
-            
-            
+            <link rel="stylesheet" href="css/jquery.mobile-1.3.2.css" />
+                        
             <!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
             <script type="text/javascript" charset="utf-8" src="cordova-2.3.0.js"></script>
             <script type="text/javascript" charset="utf-8" src="barcodescanner.js"></script>
+            <script type="text/javascript" charset="utf-8" src="js/jquery-1.10.2.min.js"></script>
+            <script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.3.2.js"></script>
             
             <script type="text/javascript">
                 
@@ -92,13 +94,89 @@
             </head>
     <body onload="onBodyLoad()">
         
+        <div data-role="page" data-theme="a" id="accueil">
+            <div data-role="header" data-theme="b" data-position="fixed">
+                <!-- header -->
+                <h1>Scan Event</h1>
+            </div>
+         
+            <div data-role="content">
+                <!-- contenu -->
+                <p>Choisir une conférence</p>
+                <form>
+                    <label for="year">Année :</label>
+                    <select id="year" name="year">
+                        <option value="2013">2013</option>
+                        <option value="2012">2012</option>
+                        <option value="2011">2011</option>
+                        <option value="2010">2010</option>
+                    </select>
+                </form>
+                <a href="#conference" data-role="button" data-icon="star">Scanner cette conférence</a>
+            </div>
+         
+            <div data-role="footer" data-theme="b" data-position="fixed">
+                <!-- footer -->
+                <p>Footer</p>
+            </div>
         
-        <button id="scan-button">scan something</button>
+        </div>
+
+
+
+        <div data-role="page" data-theme="a" id="conference">
+            <div data-role="header" data-theme="b" data-position="fixed">
+                <!-- header -->
+                <p><button id="scan-button">scan something</button></p>
+                <p>scanned: <span id="scan-result">n/a</span>
+            </div>
+         
+            <div data-role="content">
+                <!-- contenu -->
+                <ul data-role="listview">
+                    <li><a href="#scanresult" data-role="button" data-rel="dialog" data-transition="pop"><img src="images/user.png" alt="Espace membre" class="ui-li-icon">Espace membre</a></li>
+                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
+                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
+                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
+                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
+                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
+                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
+                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
+                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
+                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
+                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
+                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
+                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
+                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
+                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
+                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
+                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
+                </ul>
+            </div>
+         
+            <div data-role="footer" data-theme="b" data-position="fixed">
+                <!-- footer -->
+                <p>Footer</p>
+            </div>
         
-        <p>scanned: <span id="scan-result">n/a</span>
-        
-        
-        
+        </div>
+
+
+        <!-- Start of third page: #scanresult -->
+        <div data-role="page" id="scanresult">
+
+            <div data-role="header" data-theme="a">
+                <h1>Dialog</h1>
+            </div><!-- /header -->
+
+            <div data-role="content" data-theme="a">       
+                <p><a href="#conference" data-rel="back" data-role="button" data-inline="true" data-icon="back">Back to scan</a></p> 
+            </div><!-- /content -->
+            
+            <div data-role="footer">
+                <h4>Page Footer</h4>
+            </div><!-- /footer -->
+        </div><!-- /page scanresult -->
         
     </body>
 </html>
