@@ -44,3 +44,11 @@ JSON ou JSONP avec serveur distant :
 - http://api.jquery.com/jQuery.ajax/
 - http://en.wikipedia.org/wiki/JSONP
 - http://stackoverflow.com/questions/3506208/jquery-ajax-cross-domain
+
+
+JQUERY MOBILE façon iOS 7:
+- http://ququplay.github.io/jquery-mobile-flat-ui-theme/
+- https://github.com/ququplay/jquery-mobile-flat-ui-theme
+
+Façon iOS 6 et moins :
+- http://taitems.github.io/iOS-Inspired-jQuery-Mobile-Theme/
