@@ -52,3 +52,6 @@ JQUERY MOBILE façon iOS 7:
 
 Façon iOS 6 et moins :
 - http://taitems.github.io/iOS-Inspired-jQuery-Mobile-Theme/
+
+Template pour iOS 7 :
+http://www.queness.com/post/14386/latest-ios7-icon-templates-and-ui-kits
