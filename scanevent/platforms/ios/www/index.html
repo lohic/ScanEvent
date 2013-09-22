@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <meta charset="utf-8">
+            
+            <style>
+                
+            </style>
+            
+            <!-- iPad/iPhone specific css below, add after your main css >
+             <link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />
+             <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />
+             -->
+            <!--<link rel="stylesheet" href="css/jquery.mobile-1.3.2.css" />-->
+            <link rel="stylesheet" href="generated/jquery.mobile.flatui.min.css" />
+
+            <style>
+            .ui-panel.ui-panel-open {
+                position:fixed;
+            }
+            .ui-panel-inner {
+                position: absolute;
+                top: 1px;
+                left: 0;
+                right: 0;
+                bottom: 0px;
+                overflow: scroll;
+                -webkit-overflow-scrolling: touch;
+            }
+            </style>
+                        
+            <!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
+            <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+            <!--<script type="text/javascript" charset="utf-8" src="js/barcodescanner.js"></script>-->
+            <script type="text/javascript" charset="utf-8" src="js/jquery-1.10.2.min.js"></script>
+            <script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.3.2.js"></script>
+            <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
+
+
+
+            </head>
+    <body>
+    
+        <div data-role="page" data-theme="a" id="accueil" class="ui-page ui-body-c">
+            
+            <!-- DEBUT PANNEL -->
+            <div data-role="panel" id="menu" data-display="push">
+                <div class="ui-panel-inner">
+                    <div data-role="content" class="ui-content">
+                        <!-- contenu -->
+                        <form>
+                            <label for="organisme">Organisme :</label>
+                            <select id="organisme" name="organisme">
+                                <option value="1">Direction de la communication</option>
+                                <option value="4">CERI</option>
+                                <option value="6">Picasso</option>
+                            </select>
+                            <label for="year">Année :</label>
+                            <select id="year" name="year">
+                                <option value="2013">2013</option>
+                                <option value="2012">2012</option>
+                                <option value="2011">2011</option>
+                                <option value="2010">2010</option>
+                            </select>
+                            <label for="month">Mois :</label>
+                            <select id="month" name="month">
+                                <option value="1">Janvier</option>
+                                <option value="2">Février</option>
+                                <option value="3">Mars</option>
+                                <option value="4">Avril</option>
+                                <option value="5">Mai</option>
+                                <option value="6">Juin</option>
+                                <option value="7">Juillet</option>
+                                <option value="8">Août</option>
+                                <option value="9">Septembre</option>
+                                <option value="10">Octobre</option>
+                                <option value="11">Novembre</option>
+                                <option value="12">Décembre</option>
+                            </select>
+                        </form>
+                        <!--<p><a href="#conference" data-role="button" data-icon="arrow-r" data-iconpos="right">Scanner cette conférence</a></p>-->
+
+                        <ul data-role="listview" data-inset="true" class="ui-listview ui-listview-inset ui-corner-all ui-shadow" id="event-list">
+                            <li data-role="list-divider" data-theme="a" role="heading" class="ui-li ui-li-divider ui-bar-a ui-first-child">Liste des conférences :</li>
+                            <!--<li class="ui-li ui-li-static ui-btn-up-c">Read-only list item</li>-->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- FIN PANNEL -->
+
+            <!-- header -->
+            <div data-role="header" data-theme="b" data-position="fixed">
+               
+                <h1>Scan Event</h1>
+
+                <div data-role="controlgroup" data-type="horizontal">
+                    <a href="#menu" data-role="button" data-icon="menu">Menu</a>
+                    <a href="#" id="scan-button" data-role="button" data-icon="check">Scan</a>
+                </div>
+                    
+                <fieldset class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <h4>scanned: <span id="scan-result">n/a</span></h4>
+                    </div>
+                </fieldset>
+            </div>
+            <!-- FIN HEADER -->
+         
+            <div data-role="content" class="ui-content">
+                <!-- contenu -->
+                <ul data-role="listview">
+                    <li><a href="#scanresult" data-rel="dialog" data-transition="pop"><img src="images/user.png" alt="Espace membre" class="ui-li-icon">Espace membre</a></li>
+                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon" />À propos</a></li>
+                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon" />Donation</a></li>
+                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon" />À propos</a></li>
+                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon" />Donation</a></li>
+                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
+                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
+                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
+                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
+                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
+                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
+                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
+                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
+                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
+                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
+                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
+                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
+                </ul>
+            </div>
+         
+            <div data-role="footer" data-theme="b" data-position="fixed">
+                <!-- footer -->
+                <h4>Footer</h4>
+            </div>
+        
+        </div>
+
+
+        <!-- Start of third page: #scanresult -->
+        <div data-role="page" id="scanresult">
+
+            <div data-role="header" data-theme="a">
+                <h1>Dialog</h1>
+            </div><!-- /header -->
+
+            <div data-role="content" data-theme="a">       
+                <p><a href="#conference" data-rel="back" data-role="button" data-inline="true" data-icon="back">Back to scan</a></p> 
+            </div><!-- /content -->
+            
+            <div data-role="footer">
+                <h4>Page Footer</h4>
+            </div><!-- /footer -->
+        </div><!-- /page scanresult -->
+        
+    </body>
+</html>
+
