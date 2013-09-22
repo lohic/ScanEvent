@@ -126,7 +126,7 @@ function scannerSuccess(result) {
     resultSpan.innerText = result.text;*/
     $('#scan-result').text(result.text);
     //navigator.notification.alert(result.text);
-    navigator.notification.beep(1);
+    //navigator.notification.beep(1);
 
     navigator.notification.confirm(
         result.text,            // message
