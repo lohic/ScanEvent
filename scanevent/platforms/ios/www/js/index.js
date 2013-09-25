@@ -70,27 +70,74 @@ var app = {
     }
 };
 
+
 $(document).ready(function(){
+
+    $('#year_event').val('2013');
+    $('#month_event').val('9');
+
+    var local = app.local;
+    testJSON ={
+        'youpi':'super',
+        'autre':true,
+        'id':31
+    }
+    local.set('foo', testJSON);
+    var bar = local.get('foo');
+    console.log(bar);
 
     $.ajax({
            url:'http://www.sciencespo.fr/evenements/api/',
            type:'get',
            data:{
                event:'',
-               month:6,
-               year:2012
+               month:9,
+               year:2013
            },
            success:function(data){
                 console.log(JSON.parse(data));
 
                 dataJSON = JSON.parse(data);
                 if(typeof(dataJSON.evenements)!='undefined'){
-                    var event_list = $('#event-list');
+
+                    var i = 0;
+                    $("#id_organisme").empty();
+                    $.each(dataJSON.evenements.organismes, function(item) {
+                        i++;
+                        var is_selected = i==1 ? 'true' : 'false';
+                        $("#id_organisme").append(
+                            $("<option />")
+                            .prop('selected', is_selected)
+                            .val( dataJSON.evenements.organismes[item].id )
+                            .text(dataJSON.evenements.organismes[item].nom)
+                        );
+                    });
+                    //$("#id_organisme").prop("selectedIndex", 0);
+
                     $.each(dataJSON.evenements.evenement, function(item) {
-                        event_list.append('<li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-btn-up-c"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"><a href="#" class="ui-link-inherit" data-eventID="'+dataJSON.evenements.evenement[item].id+'">'+ dataJSON.evenements.evenement[item].titre + '</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>');
+                        $("#id_event").append(
+                            $("<option />")
+                            .val( dataJSON.evenements.evenement[item].id )
+                            .text(dataJSON.evenements.evenement[item].titre)
+                        );
+                    });
+                    //$("#id_event").prop("selectedIndex", 0);
+
+
+                    //$( "#menu" ).trigger( "updatelayout" );
+                }
+
+                if(typeof(dataJSON.evenement) != 'undefined'){
+
+                    $("#id_session").empty();
+                    $.each(dataJSON.evenement.sessions, function(item) {
+                        $("#id_session").append(
+                            $("<option />").val( dataJSON.evenement.sessions[item].id )
+                            .text(dataJSON.evenement.sessions[item].titre)
+                        );
                     });
 
-                    $( "#menu" ).trigger( "updatelayout" );
+                    //data_event = dataJSON.evenement;
                 }
            },
            error:function(w,t,f){
@@ -102,18 +149,60 @@ $(document).ready(function(){
         console.log('scan');
         //http://docs.phonegap.com/en/2.2.0/cordova_notification_notification.md.html
         
-
         cordova.plugins.barcodeScanner.scan(scannerSuccess,scannerFailure);
-        
-
-        //prompt('la question', '0000000');
     });
 
 });
 
+//appendToList($('#event-list'),'c', dataJSON.evenements.evenement[item].id, dataJSON.evenements.evenement[item].titre);
+
+/**
+ * [appendToList description]
+ * @param  {[type]} reference [description]
+ * @param  {[type]} theme     [description]
+ * @param  {[type]} id        [description]
+ * @param  {[type]} texte     [description]
+ * @return nothing            temple la liste passée en réference
+ */
+function appendToList(reference,theme,id,texte){
+    reference.append(
+        $('<li/>')
+        .data('corners',false)
+        .data('shadow',false)
+        .data('iconshadow',false)
+        .data('wrapperels','div')
+        .data('icon','arrow-r')
+        .data('iconpos','right')
+        .data('theme',theme)
+        .addClass('ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-btn-up-c')
+        .append(
+            $('<div/>')
+            .addClass('ui-btn-inner ui-li')
+            .append(
+                $('<div/>')
+                .addClass('ui-btn-text')
+                .append(
+                    $('<a/>').attr('href','#')
+                    .addClass('ui-link-inherit')
+                    .data('eventID',id)
+                    .text(texte)
+                )
+            )
+            .append(
+                $('<span/>')
+                .addClass('ui-icon ui-icon-arrow-r ui-icon-shadow')
+                .html('&nbsp;')
+            )
+        )
+    );
+}
 
 
-//------------------------------------------------------------------------------
+/**
+ * [scannerSuccess description]
+ * @param  {[type]} result [description]
+ * @return {[type]}        [description]
+ */
 function scannerSuccess(result) {
     /*alert("We got a barcode\n" +
           "Result: " + result.text + "\n" +
@@ -135,14 +224,90 @@ function scannerSuccess(result) {
         'Abandonner,Scanner'          // buttonLabels
     );
 }
+/**
+ * [onConfirm description]
+ * @param  {[type]} confirmID [description]
+ * @return {[type]}           [description]
+ */
 function onConfirm(confirmID){
     if(confirmID == 2){
         cordova.plugins.barcodeScanner.scan(scannerSuccess,scannerFailure);
     }
 }
 
-//------------------------------------------------------------------------------
+/**
+ * [scannerFailure description]
+ * @param  {[type]} message [description]
+ * @return {[type]}         [description]
+ */
 function scannerFailure(message) {
     console.log("scannerFailure: message: " + message)
     resultSpan.innerText = "failure: " + JSON.stringify(message)
 }
+
+
+
+var event_month;
+var event_year;
+var event_id_organisme;
+var event_id_event;
+var event_id_session;
+
+function loadEventFromAPI(param){
+
+    issetParam = typeof(param) != 'undefined' ? param : false;
+
+    if(typeof(event_year)!= 'undefined' && typeof(event_month)!= 'undefined' && typeof(event_id_organisme)!= 'undefined' && typeof(event_id_event)!= 'undefined' && typeof(event_id_session)!= 'id_session' && issetParam == true ){
+
+        var param = {
+            year        : event_year,
+            month       : event_month,
+            id_organisme: event_id_organisme,
+            lang        : "fr",
+        }
+
+    }else{
+
+        var param = {
+            year        : $("#year_event").val(),
+            month       : $("#month_event").val(),
+            id_organisme: $("#id_organisme").val(),
+            lang        : "fr",
+            id_event    : $("#id_event").val()
+        }
+    }
+
+
+    $.ajax({
+        url     :"../ajax/api-event.php",
+        type    : "GET",
+        dataType:'json',
+        data    : param
+
+    }).done(function ( dataJSON ) {
+        console.log('date event reçues');
+    });
+}
+
+
+/**
+ * Pour enregistrer des données en local
+ * cf //http://stackoverflow.com/questions/6511892/how-to-work-with-json-feed-stored-in-localstorage-in-phonegap-app
+ * @return {[type]} [description]
+ */
+app.local = (function () {
+    var self = {};
+
+    self.get = function (key) {
+        var b = localStorage.getItem(key);
+        return b ? JSON.parse(b) : null;
+    }
+
+    self.set = function (key, value) {
+        var b = JSON.stringify(value);
+        localStorage.setItem(key, b);
+    }
+
+    return self;
+})();
+

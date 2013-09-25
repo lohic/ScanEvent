@@ -52,6 +52,7 @@
 		D725FB40835242AE87D33ED1 /* CoreVideo.framework in Resources */ = {isa = PBXBuildFile; fileRef = C41459FD0A384FE3B1A103F8 /* CoreVideo.framework */; };
 		527195A6C2C8459A9A76D395 /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBC70D931AD46B3A1843809 /* CDVNotification.m */; };
 		7275BB66CBDB4AE0BCF02B18 /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 06D07EB8289A4B3CBBD969EF /* CDVNotification.bundle */; };
+		AD39A21BA5EB426F80276A4A /* CDVFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 286D391A323D46079C65CBA4 /* CDVFile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +127,8 @@
 		9DBC70D931AD46B3A1843809 /* CDVNotification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVNotification.m"; path = "org.apache.cordova.core.dialogs/CDVNotification.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		C8A4DE4213C24592943A7709 /* CDVNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVNotification.h"; path = "org.apache.cordova.core.dialogs/CDVNotification.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		06D07EB8289A4B3CBBD969EF /* CDVNotification.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "CDVNotification.bundle"; path = "CDVNotification.bundle"; sourceTree = "<group>"; };
+		286D391A323D46079C65CBA4 /* CDVFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVFile.m"; path = "org.apache.cordova.core.file/CDVFile.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		6B4EB4A251554080A2AAA778 /* CDVFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVFile.h"; path = "org.apache.cordova.core.file/CDVFile.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,6 +286,8 @@
 				4BDBD004AEC44BBC81696964 /* zxing-all-in-one.h */,
 				9DBC70D931AD46B3A1843809 /* CDVNotification.m */,
 				C8A4DE4213C24592943A7709 /* CDVNotification.h */,
+				286D391A323D46079C65CBA4 /* CDVFile.m */,
+				6B4EB4A251554080A2AAA778 /* CDVFile.h */,
 			);
 			name = Plugins;
 			path = "ScanEvent/Plugins";
@@ -455,6 +460,7 @@
 				E713C52EB13A4A0BAE5354BF /* CDVBarcodeScanner.mm in Resources */,
 				A3B88F6068074F9B894D1051 /* zxing-all-in-one.cpp in Resources */,
 				527195A6C2C8459A9A76D395 /* CDVNotification.m in Sources */,
+				AD39A21BA5EB426F80276A4A /* CDVFile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
