@@ -87,27 +87,29 @@ $(document).ready(function(){
     console.log(bar);
 
     $.ajax({
-           url:'http://www.sciencespo.fr/evenements/api/',
-           type:'get',
-           data:{
-               event:'',
-               month:9,
-               year:2013
-           },
-           success:function(data){
-                console.log(JSON.parse(data));
+        url:'http://www.sciencespo.fr/evenements/api/',
+        type:'get',
+        data:{
+            event:'',
+            month:9,
+            year:2013
+        },
+        dataType:'json',
+        success:function(dataJSON){
+                //console.log(JSON.parse(data));
 
-                dataJSON = JSON.parse(data);
+                //dataJSON = JSON.parse(data);
                 if(typeof(dataJSON.evenements)!='undefined'){
 
                     var i = 0;
                     $("#id_organisme").empty();
                     $.each(dataJSON.evenements.organismes, function(item) {
                         i++;
-                        var is_selected = i==1 ? 'true' : 'false';
+                        var is_selected = i==1 ? 'selected' : false;
+                        console.log(is_selected);
                         $("#id_organisme").append(
                             $("<option />")
-                            .prop('selected', is_selected)
+                            .attr('selected', is_selected)
                             .val( dataJSON.evenements.organismes[item].id )
                             .text(dataJSON.evenements.organismes[item].nom)
                         );
@@ -124,7 +126,8 @@ $(document).ready(function(){
                     //$("#id_event").prop("selectedIndex", 0);
 
 
-                    //$( "#menu" ).trigger( "updatelayout" );
+                    //http://stackoverflow.com/questions/5366508/jquery-mobile-update-select-using-javascript
+                    $( "select" ).selectmenu('refresh');
                 }
 
                 if(typeof(dataJSON.evenement) != 'undefined'){
@@ -221,7 +224,7 @@ function scannerSuccess(result) {
         result.text,            // message
         onConfirm,              // callback to invoke with index of button pressed
         'Resultat',            // title
-        'Abandonner,Scanner'          // buttonLabels
+        Array('Abandonner','Scanner')          // buttonLabels
     );
 }
 /**

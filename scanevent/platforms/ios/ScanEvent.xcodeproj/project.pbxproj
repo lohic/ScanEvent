@@ -53,6 +53,7 @@
 		527195A6C2C8459A9A76D395 /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBC70D931AD46B3A1843809 /* CDVNotification.m */; };
 		7275BB66CBDB4AE0BCF02B18 /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 06D07EB8289A4B3CBBD969EF /* CDVNotification.bundle */; };
 		AD39A21BA5EB426F80276A4A /* CDVFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 286D391A323D46079C65CBA4 /* CDVFile.m */; };
+		2E67C020829A44FAA38C385D /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 543D6B04C7BC43E797E2E255 /* CDVLogger.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +130,8 @@
 		06D07EB8289A4B3CBBD969EF /* CDVNotification.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "CDVNotification.bundle"; path = "CDVNotification.bundle"; sourceTree = "<group>"; };
 		286D391A323D46079C65CBA4 /* CDVFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVFile.m"; path = "org.apache.cordova.core.file/CDVFile.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		6B4EB4A251554080A2AAA778 /* CDVFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVFile.h"; path = "org.apache.cordova.core.file/CDVFile.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		543D6B04C7BC43E797E2E255 /* CDVLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVLogger.m"; path = "org.apache.cordova.core.console/CDVLogger.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		AAF9074C9EAA4857AFEC1D88 /* CDVLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVLogger.h"; path = "org.apache.cordova.core.console/CDVLogger.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -288,6 +291,8 @@
 				C8A4DE4213C24592943A7709 /* CDVNotification.h */,
 				286D391A323D46079C65CBA4 /* CDVFile.m */,
 				6B4EB4A251554080A2AAA778 /* CDVFile.h */,
+				543D6B04C7BC43E797E2E255 /* CDVLogger.m */,
+				AAF9074C9EAA4857AFEC1D88 /* CDVLogger.h */,
 			);
 			name = Plugins;
 			path = "ScanEvent/Plugins";
@@ -461,6 +466,7 @@
 				A3B88F6068074F9B894D1051 /* zxing-all-in-one.cpp in Resources */,
 				527195A6C2C8459A9A76D395 /* CDVNotification.m in Sources */,
 				AD39A21BA5EB426F80276A4A /* CDVFile.m in Sources */,
+				2E67C020829A44FAA38C385D /* CDVLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

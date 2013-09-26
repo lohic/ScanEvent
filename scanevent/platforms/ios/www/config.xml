@@ -2,10 +2,10 @@
 <widget id="net.formidable-studio.scanevent" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>ScanEvent</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        Application permettant de scanner les billets avec un QRcode qui permettent de rentrer dans les événements de Sciences Po.
     </description>
-    <author email="dev@callback.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="contact@formidable-studio.net" href="http://www.formidable-studio.net">
+        Formidable Studio Paris
     </author>
     <content src="index.html" />
     <access origin="*" />

@@ -29,6 +29,24 @@
                 overflow: scroll;
                 -webkit-overflow-scrolling: touch;
             }
+            .ui-header{
+                padding-top:20px;
+            }
+            .ui-header .ui-btn{
+                top:20px;
+            }
+
+    
+            .ui-controlgroup, fieldset.ui-controlgroup {
+                width: 100%;
+            }
+            .ui-select .ui-btn-icon-right .ui-icon {
+                right: 5px;
+            }
+            .ui-select .ui-btn-icon-right .ui-btn-inner, .ui-select .ui-li-has-count .ui-btn-inner {
+                padding-right: 30px;
+                width:169px;
+            }
             </style>
                         
             <!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
@@ -42,26 +60,26 @@
             </head>
     <body>
     
-        <div data-role="page" data-theme="a" id="accueil" class="ui-page ui-body-c">
+        <div data-role="page" data-theme="c" id="accueil">
             
             <!-- DEBUT PANNEL -->
             <div data-role="panel" id="menu" data-display="push">
-                <div class="ui-panel-inner">
-                    <div data-role="content" class="ui-content">
-                        <!-- contenu -->
-                        <form>
+                <div data-role="content">
+                    <!-- contenu -->
+                    <form>
+                        <fieldset data-role="controlgroup" data-mini="true">
                             <label for="id_organisme">Organisme :</label>
-                            <select id="id_organisme" name="id_organisme">
+                            <select id="id_organisme" name="id_organisme" data-theme="a">
                             </select>
                             <label for="year_event">Année :</label>
-                            <select id="year_event" name="year_event">
+                            <select id="year_event" name="year_event" data-theme="b">
                                 <option value="2013">2013</option>
                                 <option value="2012">2012</option>
                                 <option value="2011">2011</option>
                                 <option value="2010">2010</option>
                             </select>
                             <label for="month_event">Mois :</label>
-                            <select id="month_event" name="month_event">
+                            <select id="month_event" name="month_event" data-theme="b">
                                 <option value="1">Janvier</option>
                                 <option value="2">Février</option>
                                 <option value="3">Mars</option>
@@ -79,56 +97,53 @@
                             </select>
                             <select id="id_session" name="id_session">
                             </select>
-                        </form>
-                        <!--<p><a href="#conference" data-role="button" data-icon="arrow-r" data-iconpos="right">Scanner cette conférence</a></p>-->
+                        </fieldset>
+                    </form>
+                    <!--<p><a href="#conference" data-role="button" data-icon="arrow-r" data-iconpos="right">Scanner cette conférence</a></p>-->
 
-                        <ul data-role="listview" data-inset="true" class="ui-listview ui-listview-inset ui-corner-all ui-shadow" id="event-list">
-                            <li data-role="list-divider" data-theme="a" role="heading" class="ui-li ui-li-divider ui-bar-a ui-first-child">Liste des conférences :</li>
-                            <!--<li class="ui-li ui-li-static ui-btn-up-c">Read-only list item</li>-->
-                        </ul>
-                    </div>
+                    <ul data-role="listview" data-inset="true" id="event-list">
+                        <li data-role="list-divider" data-theme="a" role="heading">Liste des conférences :</li>
+                        <!--<li class="ui-li ui-li-static ui-btn-up-c">Read-only list item</li>-->
+                    </ul>
                 </div>
             </div>
             <!-- FIN PANNEL -->
 
             <!-- header -->
             <div data-role="header" data-theme="b" data-position="fixed">
-               
-                <h1>Scan Event</h1>
-
-                <div data-role="controlgroup" data-type="horizontal">
-                    <a href="#menu" data-role="button" data-icon="menu">Menu</a>
-                    <a href="#" id="scan-button" data-role="button" data-icon="check">Scan</a>
-                </div>
+                   
+                <!--<div data-role="controlgroup" data-type="horizontal">-->
+                    <a href="#menu" data-iconpos="notext" data-role="button" data-icon="flat-menu" title="Menu">Menu</a>
+                    <h1>ScanEvent</h1>
+                    <a href="#"  data-iconpos="notext" data-role="button" data-icon="check" title="Scan" id="scan-button">Scan</a>
+                <!--</div>-->
+                    <h4>scanned: <span id="scan-result">n/a</span></h4>
                     
-                <fieldset class="ui-grid-a">
-                    <div class="ui-block-a">
-                        <h4>scanned: <span id="scan-result">n/a</span></h4>
-                    </div>
-                </fieldset>
             </div>
             <!-- FIN HEADER -->
          
-            <div data-role="content" class="ui-content">
+            <div data-role="content">
                 <!-- contenu -->
-                <ul data-role="listview">
-                    <li><a href="#scanresult" data-rel="dialog" data-transition="pop"><img src="images/user.png" alt="Espace membre" class="ui-li-icon">Espace membre</a></li>
-                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon" />À propos</a></li>
-                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon" />Donation</a></li>
-                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon" />À propos</a></li>
-                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon" />Donation</a></li>
-                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
-                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
-                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
-                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
-                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
-                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
-                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
-                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
-                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
-                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
-                    <li><a href=""><img src="images/about.png" alt="À propos" class="ui-li-icon">À propos</a></li>
-                    <li><a href=""><img src="images/donate.png" alt="Donation" class="ui-li-icon">Donation</a></li>
+                <ul data-role="listview" data-autodividers="true" data-inset="false" data-filter="true" data-divider-theme="f">
+                    <!--<li><a href="#scanresult" data-rel="dialog" data-transition="pop"><img src="images/user.png" alt="Espace membre" class="ui-li-icon">Espace membre</a></li>-->
+                    <li><a href="">À propos</a></li>
+                    <li><a href="">B propos</a></li>
+                    <li><a href="">Blum Sophie</a></li>
+                    <li><a href="">conation</a></li>
+                    <li><a href="">De Cornulier Loïs</a></li>
+                    <li><a href="">Donation</a></li>
+                    <li><a href="">E onation</a></li>
+                    <li><a href="">Even Marion</a></li>
+                    <li><a href="">Horellou Loïc</a></li>
+                    <li><a href="">Horellou Loïc</a></li>
+                    <li><a href="">Horellou Loïc</a></li>
+                    <li><a href="">Horellou Loïc</a></li>
+                    <li><a href="">Horellou Loïc</a></li>
+                    <li><a href="">Horellou Loïc</a></li>
+                    <li><a href="">Horellou Loïc</a></li>
+                    <li><a href="">Horellou Loïc</a></li>
+                    <li><a href="">Super</a></li>
+                    <li><a href="">Youpi</a></li>
                 </ul>
             </div>
          
