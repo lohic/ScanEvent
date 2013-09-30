@@ -2,7 +2,7 @@
 <html>
     <head>
         <title></title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <meta charset="utf-8">
             
         <style>
@@ -18,15 +18,19 @@
 
         <style>
 
-            .ui-header, .ui-header.ui-fixed-hidden{
+            .ui-header{
                 padding-top:20px;
             }
-            .ui-header .ui-btn, .ui-header.ui-fixed-hidden .ui-btn{
+            .ui-header .ui-btn{
                 top:30px;
             }
 
             .ui-btn-icon-notext .ui-btn-inner .ui-icon {
                 margin: 4px 0px 1px 4px;
+            }
+
+            a{
+                text-decoration: none;
             }
 
             /*    
@@ -54,12 +58,9 @@
         <!-- ACCUEIL -->
         <div data-role="page" data-theme="c" id="accueil">
             <!-- HEADER -->
-            <div data-role="header" data-theme="b" data-position="fixed">
-                <!--<div data-role="controlgroup" data-type="horizontal">-->
-                    <!--<a href="#menu" data-iconpos="notext" data-role="button" data-icon="flat-menu" title="Menu">Menu</a>-->
-                    <h1>ScanEvent</h1>
-                    <a href="#authentification" data-iconpos="notext" data-role="button" data-icon="flat-man" title="Authentification" data-transition="slide">Authentification</a>
-                <!--</div>-->            
+            <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false">
+                <h1>ScanEvent</h1>
+                <a href="#authentification" data-iconpos="notext" data-role="button" data-icon="flat-man" title="Authentification" data-transition="slide">Authentification</a>
             </div>
 
 
@@ -107,25 +108,19 @@
         <!-- AUTHENTIFICATION -->
         <div data-role="page" data-theme="c" id="authentification">
             <!-- HEADER -->
-            <div data-role="header" data-theme="b" data-position="fixed">
-                <!--<div data-role="controlgroup" data-type="horizontal">-->
-                    <!--<a href="#menu" data-iconpos="notext" data-role="button" data-icon="flat-menu" title="Menu">Menu</a>-->
-                    <h1>ScanEvent</h1>
-                <!--</div>-->
-                <a href="#" data-rel="back" data-icon="back" data-iconpos="notext" data-transition="reverse slide">back</a>           
+            <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false"> 
+                <h1>ScanEvent</h1>         
+                <a href="#" data-rel="back" data-icon="back" data-iconpos="notext" data-transition="reverse slide">back</a> 
             </div>
 
             <div data-role="content">
-               <h3>Authentification</h3>
-                <form id="login_form">
-                    <input type="text" value="" id="login" name="login"/>
-                    <input type="password" value="" id="password" name="password"/>
-                    <input type="submit" value="S’identifier"/>
-                </form>
-                <form id="logut_form">
-                    <input type="hidden" value="true" id="logout" name="logout"/>
-                    <input type="submit" value="Se déconnecter"/>
-                </form>
+                <h3>Authentification</h3>
+
+                <input type="text" value="" id="login" name="login"/>
+                <input type="password" value="" id="password" name="password"/>
+                <a id="login_button" data-iconpos="right" data-role="button" data-icon="arrow-r" title="S'identifier'" data-theme="a">S'identifier</a>
+           
+                <a id="logout_button" data-iconpos="right" data-role="button" data-icon="arrow-r" title="Se déconnecter" data-theme="a">Se déconnecter</a>
             </div>
 
         </div>
@@ -137,11 +132,8 @@
         <!-- DETAIL SESSION -->
         <div data-role="page" data-theme="c" id="session_detail">
             <!-- HEADER -->
-            <div data-role="header" data-theme="b" data-position="fixed">
-                <!--<div data-role="controlgroup" data-type="horizontal">-->
-                    <!--<a href="#menu" data-iconpos="notext" data-role="button" data-icon="flat-menu" title="Menu">Menu</a>-->
-                    <h1>ScanEvent</h1>
-                <!--</div>-->
+            <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false">
+                <h1>ScanEvent</h1>
                 <a href="#" data-rel="back" data-icon="back" data-iconpos="notext">back</a>           
             </div>
             <!-- FIN HEADER -->
@@ -150,16 +142,20 @@
             <div data-role="content">
                 <h3 id="valb"></h3>
 
-                <p><a href="#" data-iconpos="left" data-role="button" data-icon="flat-settings" title="Rafraîchir" data-mini="true" data-theme="a">Rafraîchir</a></p>
-
                 <h3>Informations</h3>
-                <p><strong>Titre : </strong><span id="titre"></span></p>
-                <p><strong>Date : </strong><span id="date"></span></p>
-                <p><strong>Horaire : </strong><span id="horaire"></span></p>
-                <p><strong>Amphi interne : </strong><span id="amphi_interne"></span></p>
-                <p><strong>Amphi externe : </strong><span id="amphi_externe"></span></p>
-                <p><strong>Projo interne : </strong><span id="retransimission_interne"></span></p>
-                <p><strong>Projo externe : </strong><span id="retransimission_externe"></span></p>
+                <p><strong>Titre : </strong><span id="titre_session"></span></p>
+                <p><strong>Date : </strong><span id="date_session"></span></p>
+                <p><strong>Horaire : </strong><span id="horaire_session"></span></p>
+                <p class="not_loggued"><strong>Amphi interne : </strong><span id="amphi_interne"></span></p>
+                <p class="not_loggued"><strong>Amphi externe : </strong><span id="amphi_externe"></span></p>
+                <p class="not_loggued"><strong>Projo interne : </strong><span id="retransimission_interne"></span></p>
+                <p class="not_loggued"><strong>Projo externe : </strong><span id="retransimission_externe"></span></p>
+                <p class="not_loggued" id="lieu"></p>
+
+
+                <p class="not_loggued">
+                    <a href="#page_inscrits" data-iconpos="right" data-role="button" data-icon="arrow-r" title="Liste des inscrits" data-theme="a">Liste des inscrits</a>
+                </p>
             </div>
             <!-- FIN CONTENT -->
         </div>
@@ -169,41 +165,19 @@
 
 
         <!-- LISTING INSCRITS -->
-        <div data-role="page" data-theme="c" id="listing_inscrits">
+        <div data-role="page" data-theme="c" id="page_inscrits">
             
-            <!-- header -->
-            <div data-role="header" data-theme="b" data-position="fixed">
-                <!--</div>-->
-                    <h4>scanned: <span id="scan-result">n/a</span></h4>
+            <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false">
+                <h1>ScanEvent</h1>
+                <a href="#" data-rel="back" data-icon="back" data-iconpos="notext">back</a>
             </div>
-            <!-- FIN HEADER -->
          
             <div data-role="content">
-                <!-- contenu -->
-                <ul data-role="listview" data-autodividers="true" data-inset="false" data-filter="true" data-divider-theme="f">
-                    <!--<li><a href="#scanresult" data-rel="dialog" data-transition="pop"><img src="images/user.png" alt="Espace membre" class="ui-li-icon">Espace membre</a></li>-->
-                    <li><a href="">À propos</a></li>
-                    <li><a href="">B propos</a></li>
-                    <li><a href="">Blum Sophie</a></li>
-                    <li><a href="">conation</a></li>
-                    <li><a href="">De Cornulier Loïs</a></li>
-                    <li><a href="">Donation</a></li>
-                    <li><a href="">E onation</a></li>
-                    <li><a href="">Even Marion</a></li>
-                    <li><a href="">Horellou Loïc</a></li>
-                    <li><a href="">Horellou Loïc</a></li>
-                    <li><a href="">Horellou Loïc</a></li>
-                    <li><a href="">Horellou Loïc</a></li>
-                    <li><a href="">Horellou Loïc</a></li>
-                    <li><a href="">Horellou Loïc</a></li>
-                    <li><a href="">Horellou Loïc</a></li>
-                    <li><a href="">Horellou Loïc</a></li>
-                    <li><a href="">Super</a></li>
-                    <li><a href="">Youpi</a></li>
+                <ul id="listing_inscrits" data-role="listview" data-autodividers="true" data-inset="false" data-filter="true" data-divider-theme="a">
                 </ul>
             </div>
          
-            <div data-role="footer" data-theme="b" data-position="fixed">
+            <div data-role="footer" data-theme="b" data-position="fixed"  data-tap-toggle="false">
                 <h4><a href="#" data-iconpos="right" data-role="button" data-icon="check" title="Scan" id="scan-button" data-align="center" data-inline="true">Scan</a></h4>
             </div>
         
@@ -212,19 +186,45 @@
 
 
 
+        <!-- DETAIL INSCRIT -->
+        <div data-role="page" data-theme="c" id="detail_inscrit">
+            
+            <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false">
+                <h1>ScanEvent</h1>
+                <a href="#" data-rel="back" data-icon="back" data-iconpos="notext">back</a>
+            </div>
+         
+            <div data-role="content">
+                <h3>Détail d'un inscrit</h3>
+                <p>casque :         <span id="casque"></span></p>
+                <p>date_scan:       <span id="date_scan"></span></p>
+                <p>entreprise:      <span id="entreprise"></span></p>
+                <p>est_venu:        <span id="est_venu"></span></p>
+                <p>fonction:        <span id="fonction"></span></p>
+                <p>id:              <span id="id"></span></p>
+                <p>nom:             <span id="nom"></span></p>
+                <p>prenom:          <span id="prenom"></span></p>
+                <p>type_inscription:<span id="type_inscription"></span></p>
+                <p>unique_id:       <span id="unique_id"></span></p>            
+            </div>
+        </div>
+         <!-- FIN DETAIL INSCRIT -->
+
+
 
         <!-- RESULTAT DU SCAN-->
         <div data-role="page" id="scanresult">
 
-            <div data-role="header" data-theme="a">
-                <h1>Dialog</h1>
-            </div><!-- /header -->
+            <div data-role="header" data-theme="a" data-tap-toggle="false">
+                <h1>ScanEvent</h1>
+                <a href="#" data-rel="back" data-icon="back" data-iconpos="notext">back</a>
+            </div>
 
             <div data-role="content" data-theme="a">       
                 <p><a href="#conference" data-rel="back" data-role="button" data-inline="true" data-icon="back">Back to scan</a></p> 
-            </div><!-- /content -->
+            </div>
             
-            <div data-role="footer">
+            <div data-role="footer" data-tap-toggle="false">
                 <h4>Page Footer</h4>
             </div>
         </div>

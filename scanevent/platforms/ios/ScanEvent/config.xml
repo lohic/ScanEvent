@@ -38,4 +38,8 @@
     <feature name="Console">
         <param name="ios-package" value="CDVLogger" />
     </feature>
+    <feature name="SplashScreen">
+        <param name="ios-package" value="CDVSplashScreen" />
+        <param name="onload" value="false" />
+    </feature>
 </widget>

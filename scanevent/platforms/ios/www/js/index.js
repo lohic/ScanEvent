@@ -31,6 +31,18 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+var firstTimeRefresh;
+var isAuthenticated;
+var currentYear;
+var currentMonth;
+var currentOrganisme;
+var id_session;
+var id_inscrit;
+var actual_session;
+var local;
+
+var mois = Array('janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre');
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -49,6 +61,8 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+
+        console.log("DEVICE READY");
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -59,18 +73,13 @@ var app = {
 };
 
 
-var firstTimeRefresh;
-var isAuthenticated;
-var currentYear;
-var currentMonth;
-var currentOrganisme;
-
-var mois = Array('janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre');
 
 $(document).ready(function(){
+    /*setTimeout(function() {
+        navigator.splashscreen.hide();
+    }, 2000);*/
 
-
-    var local = app.local;
+    local = app.local;
     testJSON ={
         'youpi':'super',
         'autre':true,
@@ -87,6 +96,10 @@ $(document).ready(function(){
     currentOrganisme = 1;
     firstTimeRefresh = true;
 
+
+    $('.not_loggued').hide();
+    $("#logout_button").hide();
+    $("#login_button").show();
 
     // SELECTION DES SESSIONS
     for(var i=currentYear; i >= 2010 ; i--){
@@ -118,57 +131,6 @@ $(document).ready(function(){
         cordova.plugins.barcodeScanner.scan(scannerSuccess,scannerFailure);
     });
 
-
-    // CONNEXION
-    $("form#login_form").submit(function(e){
-        $.ajax({
-            url:'http://www.sciencespo.fr/evenements/api/',
-            type:'post',
-            data:{
-                login:      $("#login").val(),
-                password:   $("#password").val()
-            },
-            dataType:'json',
-            beforeSend: $.mobile.loading('show'),
-            success:function(dataJSON){
-                if(dataJSON.isAuthenticated == true){
-                    isAuthenticated == true;
-
-                    console.log('ON EST CONNECTÉ') 
-                }else if(dataJSON.isAuthenticated == false){
-                    isAuthenticated == false;
-
-                    console.log('ON EST DECONNECTÉ')
-                }
-            }
-        });
-        return false;
-    });
-
-    // DECONNEXION
-    $("form#logut_form").submit(function(e){
-        $.ajax({
-            url:'http://www.sciencespo.fr/evenements/api/',
-            type:'post',
-            data:{
-                logout:      $("#logout").val(),
-            },
-            dataType:'json',
-            beforeSend: $.mobile.loading('show'),
-            success:function(dataJSON){
-                if(dataJSON.isAuthenticated == true){
-                    isAuthenticated == true;
-
-                    console.log('ON EST CONNECTÉ') 
-                }else if(dataJSON.isAuthenticated == false){
-                    isAuthenticated == false;
-
-                    console.log('ON EST DECONNECTÉ')
-                }
-            }
-        });
-        return false;
-    });
 });
 
 
@@ -179,23 +141,206 @@ $(document).ready(function(){
 $( document ).on( "pageshow", "#accueil", function( event ) {
     console.log("ACCUEIL");
     refreshSessionList();
+    console.log('authentifié ? '+isAuthenticated);
 } );
 
 // AUTHENTIFICATION
 $( document ).on( "pageshow", "#authentification", function( event ) {
     console.log("AUTHENTIFICATION");
+    console.log('authentifié ? '+isAuthenticated);
+
+
+    /*if(local.get('user_data').login == null || local.get('user_data').login ==''){
+        $("#logout_button").hide();
+        $("#login_button").show();
+
+        $('.not_loggued').hide();
+    }else{
+        $('#login').val(local.get('user_data').login);
+        $('#password').val(local.get('user_data').password);
+    }*/
+
+    $("#login_button")
+    .unbind('click')
+    .click(function(e){
+    //$("form#login_form").submit(function(e){
+        console.log('click login');
+
+        /*user_data = {
+            login:      $("#login").val(),
+            password:   $("#password").val()
+        }
+        local.set('user_data', user_data);*/
+
+        $.ajax({
+            url:'http://www.sciencespo.fr/evenements/api/',
+            type:'post',
+            data:{
+                login:      $("#login").val(),
+                password:   $("#password").val()
+            },
+            dataType:'json',
+            beforeSend: $.mobile.loading('show'),
+            success:function(dataJSON){
+                $.mobile.loading('hide');
+
+                //console.log('AJAX resultat de login_form :');
+                //console.log(dataJSON);
+                if(dataJSON.isAuthenticated == true){
+                    isAuthenticated == true;
+                    console.log('ON EST CONNECTÉ')
+
+                    $("#logout_button").show();
+                    $("#login_button").hide();
+
+                    $('.not_loggued').show();
+                }else if(dataJSON.isAuthenticated == false){
+                    isAuthenticated == false;
+                    console.log('ON EST DECONNECTÉ');
+
+                    $("#logout_button").hide();
+                    $("#login_button").show();
+
+                    $('.not_loggued').hide();
+                }
+            }
+        });
+
+        e.preventDefault();
+    });
+
+    $("#logout_button")
+    .unbind('click')
+    .click(function(e){
+    //$("form#login_form").submit(function(e){
+        console.log('click login');
+
+        /*user_data = {
+            login:      null,
+            password:   null
+        }
+        local.set('user_data', user_data);*/
+
+        $("#login").val('');
+        $("#password").val('');
+
+        $.ajax({
+            url:'http://www.sciencespo.fr/evenements/api/',
+            type:'post',
+            data:{
+                logout:      true,
+            },
+            dataType:'json',
+            beforeSend: $.mobile.loading('show'),
+            success:function(dataJSON){
+                $.mobile.loading('hide');
+
+                if(dataJSON.isAuthenticated == true){
+                    isAuthenticated == true;
+                    console.log('ON EST CONNECTÉ');
+
+                    $("#logout_button").show();
+                    $("#login_button").hide();
+                }else if(dataJSON.isAuthenticated == false){
+                    isAuthenticated == false;
+                    console.log('ON EST DECONNECTÉ');
+
+                    $("#logout_button").hide();
+                    $("#login_button").show();
+                }
+            }
+        });
+
+        e.preventDefault();
+    });
 } );
+
 
 // DETAIL D'UNE SESSION
 $( document ).on( "pageshow", "#session_detail", function( event ) {
     console.log("DÉTAIL SESSION");
+    console.log('authentifié ? '+isAuthenticated);
 } );
+
 
 // LISTE DES INSCRITS
-$( document ).on( "pageshow", "#listing_inscrits", function( event ) {
+$( document ).on( "pageshow", "#page_inscrits", function( event ) {
     console.log("LISTING INSCRITS");
+    console.log('authentifié ? '+isAuthenticated);
+
+    $("#listing_inscrits").empty();
+
+    // on trie par date la liste des sessions
+    /*actual_session.liste_inscrits.sort(function(a,b){
+        return (a.jour) > (b.jour) ? -1 : 1);
+    });*/
+
+    var temp = Array();
+
+    $.each(actual_session.liste_inscrits, function(api_id_inscrit) {
+        temp.push({
+            texte : actual_session.liste_inscrits[api_id_inscrit].nom+" "+actual_session.liste_inscrits[api_id_inscrit].prenom,
+            id : actual_session.liste_inscrits[api_id_inscrit].id
+        });
+    });
+
+    temp.sort(function(a,b){
+        return a.texte < b.texte ? -1 : 1;
+    });
+    
+    
+    $.each(temp, function(api_id_inscrit) {
+        $("#listing_inscrits").append(
+            $("<li/>")
+            .append(
+                $('<a/>')
+                .attr('href','#detail_inscrit')
+                .data('transition','slide')
+                .text(temp[api_id_inscrit].texte)
+            )
+            .data('id', temp[api_id_inscrit].id )  
+        );
+    });
+
+    /*$.each(actual_session.liste_inscrits, function(api_id_inscrit) {
+        $("#listing_inscrits").append(
+            $("<li/>")
+            .append(
+                $('<a/>')
+                .attr('href','#detail_inscrit')
+                .data('transition','slide')
+                .text(actual_session.liste_inscrits[api_id_inscrit].nom+" "+actual_session.liste_inscrits[api_id_inscrit].prenom)
+            )
+            .data('id', actual_session.liste_inscrits[api_id_inscrit].id )  
+        );
+    });*/
+
+    $('#listing_inscrits li').bind('click', function() {
+        //$('#valb').text( $(this).text() );
+
+        id_inscrit = $(this).data('id');
+        refreshInscritDetail();
+    });
+
+    $("#listing_inscrits").listview('refresh');
 } );
 
+/**
+ * [refreshInscritDetail description]
+ * @return {[type]} [description]
+ */
+function refreshInscritDetail(){
+    $('#casque').text(          actual_session.liste_inscrits[id_inscrit].casque);
+    $('#date_scan').text(       actual_session.liste_inscrits[id_inscrit].date_scan);
+    $('#entreprise').text(      actual_session.liste_inscrits[id_inscrit].entreprise);
+    $('#est_venu').text(        actual_session.liste_inscrits[id_inscrit].est_venu);
+    $('#fonction').text(        actual_session.liste_inscrits[id_inscrit].fonction);
+    $('#id').text(              actual_session.liste_inscrits[id_inscrit].id);
+    $('#nom').text(             actual_session.liste_inscrits[id_inscrit].nom);
+    $('#prenom').text(          actual_session.liste_inscrits[id_inscrit].prenom);
+    $('#type_inscription').text(actual_session.liste_inscrits[id_inscrit].type_inscription);
+    $('#unique_id').text(       actual_session.liste_inscrits[id_inscrit].unique_id);
+}
 
 
 /**
@@ -205,7 +350,7 @@ $( document ).on( "pageshow", "#listing_inscrits", function( event ) {
 function refreshSessionList(){
     $.ajax({
         url:'http://www.sciencespo.fr/evenements/api/',
-        type:'get',
+        type:'GET',
         data:{
             event:          '',
             month:          currentMonth,
@@ -215,7 +360,8 @@ function refreshSessionList(){
         dataType:'json',
         beforeSend: $.mobile.loading('show'),
         success:function(dataJSON){
-            $.mobile.loading('hide');    
+            $.mobile.loading('hide');
+            console.log(dataJSON.isAuthenticated);  
 
             //dataJSON = JSON.parse(data);
             if(typeof(dataJSON.evenements)!='undefined'){
@@ -250,22 +396,32 @@ function refreshSessionList(){
 
                 // on trie par date la liste des sessions
                 liste_sessions.sort(function(a,b){
-                    return (parseInt(a.jour) > parseInt(b.jour) ? -1 : 1);
+                    return parseInt(a.mois) > parseInt(b.mois) ? -1 :
+                            (parseInt(a.mois) < parseInt(b.mois) ? 1 :
+                             (parseInt(a.jour) > parseInt(b.jour) ? -1 : 1));
+
+                    /*return (parseInt(a.mois) > parseInt(b.mois) ? -1 :
+                            (parseInt(a.mois) < parseInt(b.mois) ? 1 :
+                             (parseInt(a.mois) == parseInt(b.mois) ? 0 :
+                              (parseInt(a.jour) > parseInt(b.jour) ? -1 : 
+                               (parseInt(a.jour) < parseInt(b.jour) ?1 : 0)))));*/
                 });
+
+                //console.log(liste_sessions);
 
                 // on crée les éléments de liste des sessions 
                 for(var i=0; i<liste_sessions.length; i++){
                     $("#liste_sessions").append(
                         $("<li />").append(
-                                $("<a/>")
+                            $("<a/>")
                             .attr('href','#session_detail')
                             .data('transition','slide')
-                            .data('id_session',liste_sessions[i].id)
                             .data('date',liste_sessions[i].date)
                             .data('jour',liste_sessions[i].jour)
                             .text(liste_sessions[i].titre)
                         )
                         .data('date',liste_sessions[i].jour+' '+mois[(parseInt(liste_sessions[i].mois)-1)])
+                        .data('id_session',liste_sessions[i].id)
                     );
                 }
     
@@ -283,7 +439,10 @@ function refreshSessionList(){
                 $('#id_organisme').val(currentOrganisme);
 
                 $('#liste_sessions li').bind('click', function() {
-                    $('#valb').text( $(this).text() );
+                    //$('#valb').text( $(this).text() );
+
+                    id_session = $(this).data('id_session');
+                    refreshSessionDetail();
                 });
 
                 //http://stackoverflow.com/questions/5366508/jquery-mobile-update-select-using-javascript
@@ -309,6 +468,61 @@ function refreshSessionList(){
     });
 }
 
+/**
+ * [refreshSessionDetail description]
+ * @return {[type]} [description]
+ */
+function refreshSessionDetail(){
+    $('.not_loggued').hide();
+
+
+    console.log(id_session);
+    $.ajax({
+        url:'http://www.sciencespo.fr/evenements/api/',
+        type:'get',
+        data:{
+            session: id_session
+        },
+        dataType:'json',
+        beforeSend: $.mobile.loading('show'),
+        success:function(dataJSON){
+            $.mobile.loading('hide');
+
+            actual_session = dataJSON;
+
+            console.log("DETAIL DE SESSION");
+            console.log(actual_session);
+
+            var ladate = actual_session.session.date_debut.split('-');
+
+            $('#titre_session').text(actual_session.session.titre);
+            $('#date_session').text(ladate[2]+' '+mois[parseInt(ladate[1])-1]+' '+ladate[0]);
+            $('#horaire_session').text(actual_session.session.horaire_debut);
+            $('#amphi_interne').text(actual_session.session.places_internes_prises+"/"+actual_session.session.places_internes_totales);
+            $('#amphi_externe').text(actual_session.session.places_externes_prises+"/"+actual_session.session.places_externes_totales);
+            $('#retransimission_interne').text(actual_session.session.places_internes_prises_visio+"/"+actual_session.session.places_internes_totales_visio);
+            $('#retransimission_externe').text(actual_session.session.places_externes_prises_visio+"/"+actual_session.session.places_externes_totales_visio);
+
+            actual_session.lieu = (actual_session.lieu != null && actual_session.lieu!= undefined) ? actual_session.lieu : '';
+            actual_session.nom_adresse = (actual_session.nom_adresse != null && actual_session.nom_adresse!= undefined) ? actual_session.nom_adresse : '';
+            actual_session.code_batiment_nom = (actual_session.code_batiment_nom != null && actual_session.code_batiment_nom != undefined) ? actual_session.code_batiment_nom : '';
+            $('#lieu').html(actual_session.lieu+" "+actual_session.session.nom_adresse+" "+actual_session.session.code_batiment_nom+"<br/>"+actual_session.session.adresse);
+            //places_enregistrees: "0"
+            //places_enregistrees_visio: "0"
+            //statut_inscription: "0"
+            //statut_visio: "0"            
+
+            if( dataJSON.isAuthenticated==true ){
+                $('.not_loggued').show();    
+            }
+        },
+        error:function(w,t,f){
+            console.log(w+' '+t+' '+f);
+        }
+    });
+}
+
+
 
 
 /**
@@ -329,13 +543,40 @@ function scannerSuccess(result) {
     $('#scan-result').text(result.text);
     //navigator.notification.alert(result.text);
     //navigator.notification.beep(1);
+    
+    var message = 'Le billet scanné n’existe pas';
+    var isOK = false;
 
-    navigator.notification.confirm(
-        result.text,            // message
-        onScanConfirm,              // callback to invoke with index of button pressed
-        'Resultat',            // title
-        Array('Abandonner','Scanner')          // buttonLabels
-    );
+    $.each(actual_session.liste_inscrits, function(api_id_inscrit) {
+        if( actual_session.liste_inscrits[api_id_inscrit].unique_id == result.text){
+
+            if(actual_session.liste_inscrits[api_id_inscrit].est_venu == 0){
+                message = "Bienvenue "+actual_session.liste_inscrits[api_id_inscrit].prenom+" "+actual_session.liste_inscrits[api_id_inscrit].nom;
+                actual_session.liste_inscrits[api_id_inscrit].est_venu = 1;
+                isOK = true;
+            }else{
+                message = "Ce billet a déjà été scanné";
+            }
+
+            return false;
+        }
+    });
+
+    if(isOK){
+        navigator.notification.confirm(
+            message,            // message
+            onScanConfirm,              // callback to invoke with index of button pressed
+            'Entrée valide',            // title
+            Array('Abandonner','Scanner')          // buttonLabels
+        );
+    }else{
+         navigator.notification.alert(
+            message,  // message
+            false,         // callback
+            'Erreur',            // title
+            'Ok'                  // buttonName
+        );
+    }   
 }
 
 
