@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<articles>
+	<siteName> qui représente le nom du site </siteName>
+	<nombreArticles> <nombreArticles>
+	
+	<article id="" url="">
+		<titre><![CDATA[ orrespond au titre de l article]]></titre>
+		<shortUrl> : permet de définir une URL raccourcie customisée pour le partage de l'article sur Twitter, si non renseigné, l'URL longue est raccourcie via bit.ly</shortUrl>
+		<comments>0</comments>
+		<chapeau type="mixte"><![CDATA[ correspond au résumé de l article affiché dans la liste des articles ]]></chapeau>
+		<images>
+			<image>
+				<imageNom> qui doit impérativement être unique et être identique aux attributs "id" des balises img dans le corps de l'article</imageNom>
+				<imageUrl> : URL complète de l'image</imageUrl>
+			</image>
+			<image>
+				<imageNom> qui doit impérativement être unique et être identique aux attributs "id" des balises img dans le corps de l'article</imageNom>
+				<imageUrl> : URL complète de l'image</imageUrl>
+			</image>
+		</images>
+				
+		<miniature>
+			<imageNom> qui doit impérativement être unique et être identique aux attributs "id" des balises img dans le corps de l'article</imageNom>
+			<imageUrl> : URL complète de l'image</imageUrl>
+		</miniature>
+	
+		<contenu><![CDATA[ ]]></contenu>
+		<date></date>
+		<auteur></auteur>
+	</article>
+	
+	
+</nombreArticles>
