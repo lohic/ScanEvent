@@ -33,24 +33,18 @@
                 text-decoration: none;
             }
 
-            /*    
-            .ui-controlgroup, fieldset.ui-controlgroup {
-                width: 100%;
-            }
-            .ui-select .ui-btn-icon-right .ui-icon {
-                right: 5px;
-            }
-            .ui-select .ui-btn-icon-right .ui-btn-inner, .ui-select .ui-li-has-count .ui-btn-inner {
-                padding-right: 30px;
-                width:169px;
-            }*/
+            #est_venu_slider .ui-slider-switch { width: 9em }
+
+
         </style>
                         
         <!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-        <script type="text/javascript" charset="utf-8" src="js/jquery-1.10.2.min.js"></script>
-        <script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.3.2.js"></script>
+        <!--<script type="text/javascript" charset="utf-8" src="js/jquery-1.10.2.min.js"></script>-->
+        <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
         <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.3.2.js"></script>
+        <!--<script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.4.0-beta.1.min.js"></script>-->
 
     </head>
     <body>
@@ -105,6 +99,9 @@
         </div>
         <!-- FIN ACCUEIL -->
 
+
+
+
         <!-- AUTHENTIFICATION -->
         <div data-role="page" data-theme="c" id="authentification">
             <!-- HEADER -->
@@ -115,11 +112,11 @@
 
             <div data-role="content">
                 <h3>Authentification</h3>
-
-                <input type="text" value="" id="login" name="login"/>
-                <input type="password" value="" id="password" name="password"/>
+                <ul data-role="listview" data-inset="true">
+                    <li><input placeholder="Identifiant" type="text" value="" id="login" name="login"/></li>
+                    <li><input placeholder="Mot de passe" type="password" value="" id="password" name="password"/></li>
+                </ul>
                 <a id="login_button" data-iconpos="right" data-role="button" data-icon="arrow-r" title="S'identifier'" data-theme="a">S'identifier</a>
-           
                 <a id="logout_button" data-iconpos="right" data-role="button" data-icon="arrow-r" title="Se déconnecter" data-theme="a">Se déconnecter</a>
             </div>
 
@@ -140,22 +137,17 @@
 
             <!-- DEBUT CONTENT -->
             <div data-role="content">
-                <h3 id="valb"></h3>
-
-                <h3>Informations</h3>
-                <p><strong>Titre : </strong><span id="titre_session"></span></p>
-                <p><strong>Date : </strong><span id="date_session"></span></p>
-                <p><strong>Horaire : </strong><span id="horaire_session"></span></p>
-                <p class="not_loggued"><strong>Amphi interne : </strong><span id="amphi_interne"></span></p>
-                <p class="not_loggued"><strong>Amphi externe : </strong><span id="amphi_externe"></span></p>
-                <p class="not_loggued"><strong>Projo interne : </strong><span id="retransimission_interne"></span></p>
-                <p class="not_loggued"><strong>Projo externe : </strong><span id="retransimission_externe"></span></p>
-                <p class="not_loggued" id="lieu"></p>
-
-
-                <p class="not_loggued">
-                    <a href="#page_inscrits" data-iconpos="right" data-role="button" data-icon="arrow-r" title="Liste des inscrits" data-theme="a">Liste des inscrits</a>
-                </p>
+                <h2 id="titre_session"></h2>
+                <ul data-role="listview" data-inset="true">
+                    <li><strong>Date : </strong><span id="date_session"></span></li>
+                    <li><strong>Horaire : </strong><span id="horaire_session"></span></li>
+                    <li id="lieu"></li>
+                    <li class="not_loggued"><strong>Amphi interne : </strong><span id="amphi_interne"></span></li>
+                    <li class="not_loggued"><strong>Amphi externe : </strong><span id="amphi_externe"></span></li>
+                    <li class="not_loggued"><strong>Projo interne : </strong><span id="retransimission_interne"></span></li>
+                    <li class="not_loggued"><strong>Projo externe : </strong><span id="retransimission_externe"></span></li>
+                </ul>
+                <a class="not_loggued" id="bouton_liste_inscrits" href="#page_inscrits" data-iconpos="right" data-role="button" data-icon="arrow-r" title="Liste des inscrits" data-theme="a">Liste des inscrits</a>
             </div>
             <!-- FIN CONTENT -->
         </div>
@@ -186,6 +178,7 @@
 
 
 
+
         <!-- DETAIL INSCRIT -->
         <div data-role="page" data-theme="c" id="detail_inscrit">
             
@@ -195,18 +188,24 @@
             </div>
          
             <div data-role="content">
-                <h3>Détail d'un inscrit</h3>
-                <p>casque :         <span id="casque"></span></p>
-                <p>date_scan:       <span id="date_scan"></span></p>
-                <p>entreprise:      <span id="entreprise"></span></p>
-                <p>est_venu:        <span id="est_venu"></span></p>
-                <p>fonction:        <span id="fonction"></span></p>
-                <p>id:              <span id="id"></span></p>
-                <p>nom:             <span id="nom"></span></p>
-                <p>prenom:          <span id="prenom"></span></p>
-                <p>type_inscription:<span id="type_inscription"></span></p>
-                <p>unique_id:       <span id="unique_id"></span></p>            
+                <h1><span style="text-transform: capitalize" id="prenom"></span> <span style="text-transform: uppercase" id="nom"></span></h1>
+                <ul data-role="listview" data-inset="true">
+                    <li>Casque : <span id="casque"></span></li>
+                    <li>Date_scan : <span id="date_scan"></span></li>
+                    <li>Entreprise : <span id="entreprise"></span></li>
+                    <li>Fonction : <span id="fonction"></span></li>
+                    <li>Type d'inscription : <span id="type_inscription"></span></li>
+                    <li>Identifiant unique :<li>
+                    <li><h3 id="unique_id" style="text-align:center"></h3></li>
+                </ul>
             </div>
+
+            <div data-role="footer" data-theme="b" data-position="fixed"  data-tap-toggle="false">
+                    <select name="est_venu" id="est_venu" data-role="slider" data-theme="b">
+                        <option value="non">Non</option>
+                        <option value="oui">Oui</option>
+                    </select>
+                </div>
         </div>
          <!-- FIN DETAIL INSCRIT -->
 
