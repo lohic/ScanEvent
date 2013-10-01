@@ -557,7 +557,7 @@ function refreshSessionDetail(){
                 $('.not_loggued').css('display','block'); 
             }
 
-            if(parseInt(actual_session.session.places_internes_prises) <= 0 && parseInt(actual_session.session.places_externes_prises) <= 0 && parseInt(actual_session.session.places_internes_prises_visio)<= 0 && parseInt(actual_session.session.places_externes_prises_visio) <= 0){
+            if((parseInt(actual_session.session.places_internes_prises) <= 0 && parseInt(actual_session.session.places_externes_prises) <= 0 && parseInt(actual_session.session.places_internes_prises_visio)<= 0 && parseInt(actual_session.session.places_externes_prises_visio) <= 0) || dataJSON.isAuthenticated == false){
                 $('#bouton_liste_inscrits').css('display','none');
             }else{
                 $('#bouton_liste_inscrits').css('display','block');
