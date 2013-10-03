@@ -74,25 +74,6 @@ var app = {
 
 
 
-$(document).ready(function(){
-    /*setTimeout(function() {
-        navigator.splashscreen.hide();
-    }, 2000);*/
-
-    
-
-
-    // SCAN DE BILLET
-    /*$('#scan-button').click(function(e){
-        console.log('SCAN');
-        //http://docs.phonegap.com/en/2.2.0/cordova_notification_notification.md.html
-        
-        cordova.plugins.barcodeScanner.scan(scannerSuccess,scannerFailure);
-    });*/
-});
-
-
-
 // GESTION DE L'AFFICHAGE DES PAGES
 
 // ACCUEIL
@@ -136,7 +117,7 @@ $( document ).on( "pagebeforeshow", "#accueil", function( event ) {
 
     $("#year_event").val(currentYear); 
     $("#month_event").val(currentMonth);
-    $( "select" )
+    $('#accueil select')
     .selectmenu()
     .selectmenu('refresh');
 
@@ -281,7 +262,6 @@ $( document ).on( "pagebeforeshow", "#page_inscrits", function( event ) {
 
     $("#listing_inscrits").empty();
 
-
     var temp = Array();
 
     $.each(actual_session.liste_inscrits, function(api_id_inscrit) {
@@ -370,6 +350,7 @@ function refreshInscritDetail(){
     $('#type_inscription').text(actual_session.liste_inscrits[id_inscrit].type_inscription);
     $('#unique_id').text(       actual_session.liste_inscrits[id_inscrit].unique_id);
 
+    
     $('#est_venu')
     .val( actual_session.liste_inscrits[id_inscrit].est_venu == 1 ? 'oui' : 'non')
     .slider()
