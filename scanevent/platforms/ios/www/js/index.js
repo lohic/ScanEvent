@@ -31,18 +31,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var firstTimeRefresh;
-var isAuthenticated;
-var currentYear;
-var currentMonth;
-var currentOrganisme;
-var id_session;
-var id_inscrit;
-var actual_session;
-var local;
-
-var mois = Array('janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre');
-
 var app = {
     // Application Constructor
     initialize: function() {
@@ -59,7 +47,7 @@ var app = {
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
+    /*onDeviceReady: function() {
         app.receivedEvent('deviceready');
 
         console.log("DEVICE READY");
@@ -69,20 +57,242 @@ var app = {
         var parentElement = document.getElementById(id);
 
         console.log('Received Event: ' + id);       
-    }
+    }*/ 
 };
 
+var firstTimeRefresh;
+var isAuthenticated;
+var currentYear;
+var currentMonth;
+var currentOrganisme;
+var id_session;
+var id_inscrit;
+var actual_session;
+var local;
+var filename = escape("test de nom éé.txt");
+var filecontent = "Test at "+new Date().toString() + "\n";
+
+var mois = Array('janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre');
+
+var fileSystem;
+var locale_sessions = Array();
 
 
-// GESTION DE L'AFFICHAGE DES PAGES
+document.addEventListener("deviceready", onDeviceReady, false);
+
+function onDeviceReady() {
+
+    console.log("DEVICE READY");
+    
+
+    $(document).ready(function(){
+        console.log('JQUERY READY');
+
+        // on appelle le système de fichier uniquement quand jquery est prêt
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, onFSError);
+    });
+}
+
+/*
+ * ====================================
+ * FILE SYSTEM
+ * cf http://www.raymondcamden.com/index.cfm/2012/3/9/PhoneGaps-File-API
+ * ====================================
+ */
+
+
+//generic getById
+function getById(id) {
+    return document.querySelector(id);
+}
+
+//generic error handler
+function onFSError(e) {
+    console.log('Error : '+e);
+}
+
+function onFSSuccess(fs) {
+    console.log('onFSSuccess');
+    fileSystem = fs;
+
+    getById("#dirListingButton").addEventListener("touchstart",doDirectoryListing);            
+    getById("#addFileButton").addEventListener("touchstart",doSaveFile);            
+    getById("#readFileButton").addEventListener("touchstart",doReadFile);            
+    getById("#metadataFileButton").addEventListener("touchstart",doMetadataFile);            
+    getById("#deleteFileButton").addEventListener("touchstart",doDeleteFile);            
+    
+    console.log( "Got the file system: "+fileSystem.name +"\n" + "root entry name is "+fileSystem.root.name); 
+
+    doDirectoryListing();
+}
+
+function doDirectoryListing(e) {
+    console.log('doDirectoryListing');
+    //get a directory reader from our FS
+    var dirReader = fileSystem.root.createReader();
+
+    dirReader.readEntries(gotFiles,onFSError);    
+}
+
+function gotFiles(entries) {
+    console.log('gotFiles');
+    //var s = "";
+
+    $('#saved_sessions').html('<li data-role="list-divider" data-theme="a" role="heading">Conférences mémorisées :</li>');
+
+    for(var i=0,len=entries.length; i<len; i++) {
+        //entry objects include: isFile, isDirectory, name, fullPath
+
+        if (entries[i].isFile && entries[i].name!='.DS_Store') {
+            // file
+            $('#saved_sessions').append(
+                $("<li />")
+                .append(
+                    $("<a/>")
+                    .attr('href','#session_detail')
+                    .data('transition','slide')
+                    //.data('date',liste_sessions[i].date)
+                    //.data('jour',liste_sessions[i].jour)
+                    .text(get_file_session_name(entries[i].name))
+                    .append(
+                        $("<img/>")
+                        .attr('width',16)
+                        .attr('height',16)
+                        .addClass('ui-li-icon')
+                        .attr('src','images/neutre@2x.png')
+                    )
+                )
+
+                //.data('date',liste_sessions[i].jour+' '+mois[(parseInt(liste_sessions[i].mois)-1)])
+                //data('id_session',liste_sessions[i].id)
+            );
+
+
+            locale_sessions.push(get_file_session_name(entries[i].name))
+
+        } else{
+            // directory
+        } 
+    }
+
+    $('#saved_sessions')
+    .listview({
+        autodividers: true,
+        autodividersSelector: function (li) {
+            var out = li.data("date");
+            return out;
+        }
+    })
+    .listview('refresh');
+
+}
+
+
+function doSaveFile(e) {
+    console.log('doSaveFile');
+    fileSystem.root.getFile(filename, {create:true}, saveFileContent, onFSError);
+}
+
+function saveFileContent(f) {
+    console.log('saveFileContent');
+    f.createWriter(function(writerOb) {
+        writerOb.onwrite=function() {
+            console.log("Done writing to file");
+        }
+        //go to the end of the file...
+        //writerOb.seek(writerOb.length);
+        writerOb.seek(0);
+        writerOb.write(filecontent);
+
+        doDirectoryListing();
+    });    
+}
+
+function doReadFile(e) {
+    console.log('doReadFile');
+    fileSystem.root.getFile(filename, {create:true}, readFile, onFSError);
+}
+
+function readFile(f) {
+    console.log('readFile')
+    reader = new FileReader();
+    reader.onloadend = function(e) {
+        console.log("go to end");
+        console.log(e.target.result);
+    }
+    reader.readAsText(f);
+}
+
+function doMetadataFile(e) {
+    console.log('doMetadataFile');
+    fileSystem.root.getFile(filename, {create:true}, function(f) {
+        f.getMetadata(metadataFile,onFSError);
+    }, onFSError);
+}
+
+function metadataFile(m) {
+    console.log('metadataFile');
+    console.log("File was last modified "+m.modificationTime);    
+}
+
+function doDeleteFile(e) {
+    console.log('doDeleteFile');
+    fileSystem.root.getFile(filename, {create:true}, function(f) {
+        f.remove(function() {
+            console.log("File removed"); 
+
+            doDirectoryListing();
+        });
+    }, onFSError);
+}
+
+/**
+ * Sert à supprimer le .txt d'un nom de fichier
+ * @param  {[type]} _filename [description]
+ * @return {[type]}           [description]
+ */
+function get_file_session_name(_filename){
+    var n=_filename.lastIndexOf(".");
+    return unescape(_filename.substring(0,n));
+}
+
+
+/*
+ * ====================================
+ * CHECK CONNEXION
+ * ====================================
+ */
+
+
+function checkConnection() {
+    var networkState = navigator.connection.type;
+
+    var states = {};
+    states[Connection.UNKNOWN]  = 'Unknown connection';
+    states[Connection.ETHERNET] = 'Ethernet connection';
+    states[Connection.WIFI]     = 'WiFi connection';
+    states[Connection.CELL_2G]  = 'Cell 2G connection';
+    states[Connection.CELL_3G]  = 'Cell 3G connection';
+    states[Connection.CELL_4G]  = 'Cell 4G connection';
+    states[Connection.CELL]     = 'Cell generic connection';
+    states[Connection.NONE]     = 'No network connection';
+
+    navigator.notification.alert('Connection type: ' + states[networkState]);
+}
+
+
+
 
 // ACCUEIL
 $( document ).on( "pagebeforeshow", "#accueil", function( event ) {
+    console.log("ACCUEIL");
+    console.log('authentifié ? '+isAuthenticated);
+
     isAuthenticated = false;
 
-    console.log("ACCUEIL");
-    //refreshSessionList();
-    console.log('authentifié ? '+isAuthenticated);
+    $('.connected').css('display','none');
+    $('.not_connected').css('display','none');
+
 
     local = app.local;
     testJSON ={
@@ -93,18 +303,18 @@ $( document ).on( "pagebeforeshow", "#accueil", function( event ) {
     local.set('foo', testJSON);
     var bar = local.get('foo');
     //console.log(bar);
-
-    // VARIABLES
     
-    currentYear = new Date().getFullYear();
-    currentMonth = parseInt(new Date().getMonth() +1);
-    currentOrganisme = 1;
-    firstTimeRefresh = true;
+    // VARIABLES
+    currentYear         = new Date().getFullYear();
+    currentMonth        = parseInt(new Date().getMonth() +1);
+    currentOrganisme    = 1;
+    firstTimeRefresh    = true;
 
 
-    $('.not_loggued').hide();
-    $("#logout_button").hide();
-    $("#login_button").show();
+    $('.not_loggued').css('display','none');
+    $("#logout_button").css('display','none');
+    $("#login_button").css('display','block');
+    
 
     // SELECTION DES SESSIONS
     for(var i=currentYear; i >= 2010 ; i--){
@@ -115,16 +325,20 @@ $( document ).on( "pagebeforeshow", "#accueil", function( event ) {
         );
     }
 
+
     $("#year_event").val(currentYear); 
     $("#month_event").val(currentMonth);
     $('#accueil select')
     .selectmenu()
     .selectmenu('refresh');
 
+    console.log('firstTimeRefresh '+firstTimeRefresh);
+
     $("#month_event, #year_event, #id_organisme").change(function(e){
         currentYear      = $('#year_event').val();
         currentMonth     = $("#month_event").val();
-        currentOrganisme = firstTimeRefresh ? 1 : $('#id_organisme').val();;
+        //currentOrganisme = firstTimeRefresh ? 1 : $('#id_organisme').val();
+        currentOrganisme = $('#id_organisme').val();
 
         refreshSessionList();
     })
@@ -240,6 +454,12 @@ $( document ).on( "pagebeforeshow", "#authentification", function( event ) {
                     $("#logout_button").css('display','none');
                     $("#login_button").css('display','block');
                 }
+                $('.connected').css('display','block');
+                $('.not_connected').css('display','none');
+            },
+            error:function(w,t,f){
+                $('.connected').css('display','none');
+                $('.not_connected').css('display','block');
             }
         });
 
@@ -248,10 +468,13 @@ $( document ).on( "pagebeforeshow", "#authentification", function( event ) {
 } );
 
 
+
 // DETAIL D'UNE SESSION
 $( document ).on( "pagebeforeshow", "#session_detail", function( event ) {
     console.log("DÉTAIL SESSION");
     console.log('authentifié ? '+isAuthenticated);
+
+    refreshSessionDetail();
 } );
 
 
@@ -350,6 +573,7 @@ function refreshInscritDetail(){
     $('#type_inscription').text(actual_session.liste_inscrits[id_inscrit].type_inscription);
     $('#unique_id').text(       actual_session.liste_inscrits[id_inscrit].unique_id);
 
+
     
     $('#est_venu')
     .val( actual_session.liste_inscrits[id_inscrit].est_venu == 1 ? 'oui' : 'non')
@@ -380,6 +604,11 @@ function refreshSessionList(){
         dataType:'json',
         beforeSend: $.mobile.loading('show'),
         success:function(dataJSON){
+
+            $('.connected').css('display','block');
+            $('.not_connected').css('display','none');
+
+
             $.mobile.loading('hide');
             console.log('refreshSessionList :'+dataJSON.isAuthenticated);  
 
@@ -427,18 +656,30 @@ function refreshSessionList(){
 
                 // on crée les éléments de liste des sessions 
                 for(var i=0; i<liste_sessions.length; i++){
-                    $("#liste_sessions").append(
-                        $("<li />").append(
-                            $("<a/>")
-                            .attr('href','#session_detail')
-                            .data('transition','slide')
-                            .data('date',liste_sessions[i].date)
-                            .data('jour',liste_sessions[i].jour)
-                            .text(liste_sessions[i].titre)
-                        )
-                        .data('date',liste_sessions[i].jour+' '+mois[(parseInt(liste_sessions[i].mois)-1)])
-                        .data('id_session',liste_sessions[i].id)
-                    );
+
+                    if(jQuery.inArray(liste_sessions[i].titre, locale_sessions) == -1 ){
+
+                        $("#liste_sessions").append(
+                            $("<li />")
+                            .append(
+                                $("<a/>")
+                                .attr('href','#session_detail')
+                                .data('transition','slide')
+                                .data('date',liste_sessions[i].date)
+                                .data('jour',liste_sessions[i].jour)
+                                .text(liste_sessions[i].titre)
+                                .append(
+                                    $("<img/>")
+                                    .attr('width',16)
+                                    .attr('height',16)
+                                    .addClass('ui-li-icon')
+                                    .attr('src','images/vert@2x.png')
+                                )
+                            )
+                            .data('date',liste_sessions[i].jour+' '+mois[(parseInt(liste_sessions[i].mois)-1)])
+                            .data('id_session',liste_sessions[i].id)
+                        );
+                    }   
                 }
     
                 $('#liste_sessions')
@@ -457,7 +698,7 @@ function refreshSessionList(){
                 $('#liste_sessions li').bind('click', function() {
 
                     id_session = $(this).data('id_session');
-                    refreshSessionDetail();
+                    //refreshSessionDetail();
                 });
 
                 //http://stackoverflow.com/questions/5366508/jquery-mobile-update-select-using-javascript
@@ -479,6 +720,10 @@ function refreshSessionList(){
         },
         error:function(w,t,f){
             console.log(w+' '+t+' '+f);
+            console.log('echec');
+            $('.connected').css('display','none');
+            $('.not_connected').css('display','block');
+           // navigator.notification.alert('mince');
         }
     });
 }
@@ -488,6 +733,18 @@ function refreshSessionList(){
  * @return {[type]} [description]
  */
 function refreshSessionDetail(){
+    $('#titre_session').text('');
+    $('#date_session').text('');
+    $('#horaire_session').text('');
+    $('#amphi_interne').text('');
+    $('#amphi_externe').text('');
+    $('#retransmission_interne').text('');
+    $('#retransmission_externe').text('');
+
+    $('#save_session_button').data('filename','');
+
+    $('#save_session_button').css('display','none');
+
     $('.not_loggued').css('display','none');
     console.log(id_session);
 
@@ -518,8 +775,8 @@ function refreshSessionDetail(){
             $('#horaire_session').text(actual_session.session.horaire_debut);
             $('#amphi_interne').text(actual_session.session.places_internes_prises+"/"+actual_session.session.places_internes_totales);
             $('#amphi_externe').text(actual_session.session.places_externes_prises+"/"+actual_session.session.places_externes_totales);
-            $('#retransimission_interne').text(actual_session.session.places_internes_prises_visio+"/"+actual_session.session.places_internes_totales_visio);
-            $('#retransimission_externe').text(actual_session.session.places_externes_prises_visio+"/"+actual_session.session.places_externes_totales_visio);
+            $('#retransmission_interne').text(actual_session.session.places_internes_prises_visio+"/"+actual_session.session.places_internes_totales_visio);
+            $('#retransmission_externe').text(actual_session.session.places_externes_prises_visio+"/"+actual_session.session.places_externes_totales_visio);
 
             actual_session.lieu              = (actual_session.lieu != null && actual_session.lieu!= undefined) ? actual_session.lieu : '';
             actual_session.nom_adresse       = (actual_session.nom_adresse != null && actual_session.nom_adresse!= undefined) ? actual_session.nom_adresse : '';
@@ -527,6 +784,18 @@ function refreshSessionDetail(){
             $('#lieu').html(actual_session.lieu+" "+actual_session.session.nom_adresse+" "+"<br/>"+actual_session.session.adresse);
             console.log('NOM DU BATIMENT : '+actual_session.session.code_batiment_nom);
 
+            $('#save_session_button').data('filename', escape(actual_session.session.titre)+'.txt');
+
+            $('#save_session_button').click(function(e){
+                filename = $('#save_session_button').data('filename');
+                //actual_session
+                //test={'super':'Ça fonctionne !'}
+                filecontent = JSON.stringify(actual_session);
+                console.log('on sauve la session ' + filename);
+                //console.log(filecontent);
+
+                doSaveFile();
+            });
             //places_enregistrees: "0"
             //places_enregistrees_visio: "0"
             //statut_inscription: "0"
@@ -543,13 +812,93 @@ function refreshSessionDetail(){
             }else{
                 $('#bouton_liste_inscrits').css('display','block');
             }
+
+            $('.connected').css('display','block');
+            $('.not_connected').css('display','none');
         },
         error:function(w,t,f){
             console.log(w+' '+t+' '+f);
+
+            $('.connected').css('display','none');
+            $('.not_connected').css('display','block');
         }
     });
 }
 
+
+
+// LISTE DES INSCRITS
+$( document ).on( "pagebeforeshow", "#page_inscrits", function( event ) {
+    console.log("LISTING INSCRITS");
+    console.log('authentifié ? '+isAuthenticated);
+
+    $("#listing_inscrits").empty();
+
+    var temp = Array();
+
+    $.each(actual_session.liste_inscrits, function(api_id_inscrit) {
+        temp.push({
+            texte : actual_session.liste_inscrits[api_id_inscrit].nom.toUpperCase()+" "+actual_session.liste_inscrits[api_id_inscrit].prenom.capitalize(),
+            id : actual_session.liste_inscrits[api_id_inscrit].id
+        });
+    });
+
+    temp.sort(function(a,b){
+        return a.texte.toLowerCase() < b.texte.toLowerCase() ? -1 : 1;
+    });
+    
+    $.each(temp, function(api_id_inscrit) {
+        $("#listing_inscrits").append(
+            $("<li/>")
+            .append(
+                $('<a/>')
+                .attr('href','#detail_inscrit')
+                .data('transition','slide')
+                .text(temp[api_id_inscrit].texte)
+            )
+            .data('lettre',temp[api_id_inscrit].texte.substr(0,1).toUpperCase())
+            .data('id', temp[api_id_inscrit].id )  
+        );
+    });
+
+    $("#listing_inscrits")
+    .listview({
+        autodividers: true,
+        autodividersSelector: function (li) {
+            var out = li.data("lettre");
+            return out;
+        }
+    })
+    .listview('refresh');
+
+
+    $('#listing_inscrits li')
+    .bind('click', function() {
+        id_inscrit = $(this).data('id');
+        //refreshInscritDetail();
+        //
+        console.log($(this).data('id')+ ' ' + id_inscrit);
+    });
+
+    $('#scan-button')
+    .unbind('click')
+    .click(function(e){
+        console.log('SCAN');
+        //http://docs.phonegap.com/en/2.2.0/cordova_notification_notification.md.html
+        
+        cordova.plugins.barcodeScanner.scan(scannerSuccess,scannerFailure);
+    });
+} );
+
+
+
+// DETAIL D'UNE SESSION
+$( document ).on( "pagebeforeshow", "#detail_inscrit", function( event ) {
+    console.log("DÉTAIL INSCRIT");
+    console.log('authentifié ? '+isAuthenticated);
+
+    refreshInscritDetail(); 
+} );
 
 
 
@@ -655,6 +1004,10 @@ app.local = (function () {
 })();
 
 
+/**
+ * [capitalize description]
+ * @return {[type]} [description]
+ */
 String.prototype.capitalize = function() {
 
     var pieces = this.split(" ");
@@ -664,3 +1017,22 @@ String.prototype.capitalize = function() {
     }
     return pieces.join(" ");
 }
+
+
+
+/**
+ * [date2mysql description]
+ * cf http://jsfiddle.net/73vVD/
+ * @return {[type]} [description]
+ */
+Date.prototype.date2mysql = function(){
+    annee   = this.getFullYear();
+    mois    = this.getMonth() + 1 <10 ? "0"+(this.getMonth() + 1): this.getMonth() + 1;
+    jour    = this.getDate() <10      ? "0"+this.getDate()       : this.getDate();
+    heure   = this.getHours()<10      ? "0"+this.getHours()      : this.getHours();
+    minute  = this.getMinutes()<10    ? "0"+this.getMinutes()    : this.getMinutes();
+    seconde = this.getSeconds()<10    ? "0"+this.getSeconds()    : this.getSeconds();
+
+    return annee+"-"+mois+"-"+jour+" "+heure+":"+minute+":"+seconde;
+}
+

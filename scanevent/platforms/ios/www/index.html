@@ -35,16 +35,40 @@
 
             #est_venu_slider .ui-slider-switch { width: 9em }
 
+            @font-face {
+              font-family: 'proximanova';
+              font-style: normal;
+              font-weight: 400;
+              src: local('Proxima Nova Extra Condensed Thin'),
+                url(generated/proxima/ProximaNovaExCn-Thin.otf) format('opentype');
+            }
+
+            *{
+                font-family:'proximanova'!important;
+                /*line-height: 18px;
+                font-size:18px;*/
+            }
+            h1,h2,h3,h4,h5,h6{
+                text-transform: uppercase;
+            }
+
+            .ui-listview .ui-li-icon{
+                top : 0.7em;
+            }
+
+            .ui-li-divider{
+                text-transform: uppercase;
+            }
 
         </style>
                         
         <!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-        <!--<script type="text/javascript" charset="utf-8" src="js/jquery-1.10.2.min.js"></script>-->
-        <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
-        <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery-1.10.2.min.js"></script>
+        <!--<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>-->
         <script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.3.2.js"></script>
-        <!--<script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.4.0-beta.1.min.js"></script>-->
+        <script type="text/javascript" charset="utf-8" src="js/jquery.storage.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
 
     </head>
     <body>
@@ -54,19 +78,27 @@
             <!-- HEADER -->
             <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false">
                 <h1>ScanEvent</h1>
-                <a href="#authentification" data-iconpos="notext" data-role="button" data-icon="flat-man" title="Authentification" data-transition="slide">Authentification</a>
+                <a href="#authentification" data-iconpos="notext" data-role="button" data-icon="flat-man" title="Authentification" data-transition="slide" class="connected">Authentification</a>
             </div>
 
 
             <div data-role="content">
-                <!-- contenu -->
-                <!--<ul data-role="listview" data-inset="true" id="event-list">
-                    <li data-role="list-divider" data-theme="a" role="heading">Conférences mémorisées :</li>
-                </ul>-->
+                <button id="addFileButton">Create/Append to Test File</button>
+                <button id="readFileButton">Read Test File</button>
+                <button id="metadataFileButton">Get Test File Metadata</button>
+                <button id="deleteFileButton">Delete Test File</button>
+                <button id="dirListingButton">Show Directory Contents</button>
 
-                <div>
+                <!-- contenu -->
+                <ul data-role="listview" data-inset="true" id="saved_sessions">
+                    <li data-role="list-divider" data-theme="a" role="heading">Conférences mémorisées :</li>
+                </ul>
+
+                <h2 class="not_connected" style="text-align:center;">Vous n’êtes pas connecté !</h2>
+
+                <div class="connected">
                     <form>
-                        <fieldset data-role="controlgroup" data-mini="true">
+                        <fieldset data-role="controlgroup" data-mini="false">
                             <label for="id_organisme">Organisme :</label>
                             <select id="id_organisme" name="id_organisme" data-theme="a">
                             </select>
@@ -92,8 +124,10 @@
                     </form>
                 </div>
 
-                <ul data-role="listview" data-autodividers="true" data-inset="true" data-filter="false" data-divider-theme="a" id="liste_sessions">
-                </ul> 
+                <ul data-role="listview" data-autodividers="true" data-inset="true" data-filter="false" data-divider-theme="a" id="liste_sessions" class="connected">
+                </ul>
+
+
             </div>
 
         </div>
@@ -144,9 +178,10 @@
                     <li id="lieu"></li>
                     <li class="not_loggued"><strong>Amphi interne : </strong><span id="amphi_interne"></span></li>
                     <li class="not_loggued"><strong>Amphi externe : </strong><span id="amphi_externe"></span></li>
-                    <li class="not_loggued"><strong>Projo interne : </strong><span id="retransimission_interne"></span></li>
-                    <li class="not_loggued"><strong>Projo externe : </strong><span id="retransimission_externe"></span></li>
+                    <li class="not_loggued"><strong>Projo interne : </strong><span id="retransmission_interne"></span></li>
+                    <li class="not_loggued"><strong>Projo externe : </strong><span id="retransmission_externe"></span></li>
                 </ul>
+                <a href="#" class="not_loggued" data-role="button" data-filename="" id="save_session_button">Sauver l'événement en local</a>
                 <a class="not_loggued" id="bouton_liste_inscrits" href="#page_inscrits" data-iconpos="right" data-role="button" data-icon="arrow-r" title="Liste des inscrits" data-theme="a">Liste des inscrits</a>
             </div>
             <!-- FIN CONTENT -->
