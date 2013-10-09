@@ -60,6 +60,40 @@
                 text-transform: uppercase;
             }
 
+            .local_data{
+                text-align: center;
+                background:#00ff90;
+                color:#000;
+                padding: 3px 0 1px;
+                border-radius: 4px;
+                text-transform: none;
+            }
+            .online_data{
+                text-align: center;
+                background:#ff4c00;
+                color:#FFF;
+                padding: 3px 0 1px;
+                border-radius: 4px;
+                text-transform: none;
+            }
+
+            .chart{
+                display:inline-block;
+            }
+
+            .slider_est_venu{
+                text-align: center;
+            }
+        
+            .slider_est_venu .ui-slider-label-a{
+                background:#00ff90!important;
+                color:#000000!important;
+            }
+
+            .slider_est_venu .ui-slider-label-b{
+                background:#ff4c00!important;
+                color:#FFFFFF!important;
+            }
         </style>
                         
         <!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
@@ -68,6 +102,8 @@
         <!--<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>-->
         <script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.3.2.js"></script>
         <script type="text/javascript" charset="utf-8" src="js/jquery.storage.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/raphael-min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/charts.min.js"></script>
         <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
 
     </head>
@@ -83,11 +119,12 @@
 
 
             <div data-role="content">
-                <button id="addFileButton">Create/Append to Test File</button>
-                <button id="readFileButton">Read Test File</button>
-                <button id="metadataFileButton">Get Test File Metadata</button>
-                <button id="deleteFileButton">Delete Test File</button>
-                <button id="dirListingButton">Show Directory Contents</button>
+                <!--<button id="addFileButton">Ajout d'un fichier test</button>
+                <button id="readFileButton">Lire le fichier test</button>
+                <button id="metadataFileButton">Récupérer les métadatas</button>
+                <button id="deleteFileButton">Supprimer le fichier test</button>
+                <button id="dirListingButton">Mettre à jour le répertoire</button>-->
+                <button id="deleteAllFilesButton">Supprimer les sessions locales</button>
 
                 <!-- contenu -->
                 <ul data-role="listview" data-inset="true" id="saved_sessions">
@@ -171,6 +208,8 @@
 
             <!-- DEBUT CONTENT -->
             <div data-role="content">
+                <h3 class="local_data">→ Données locales ←</h3>
+                <h3 class="online_data">→ Données en lignes ←</h3>
                 <h2 id="titre_session"></h2>
                 <ul data-role="listview" data-inset="true">
                     <li><strong>Date : </strong><span id="date_session"></span></li>
@@ -181,8 +220,13 @@
                     <li class="not_loggued"><strong>Projo interne : </strong><span id="retransmission_interne"></span></li>
                     <li class="not_loggued"><strong>Projo externe : </strong><span id="retransmission_externe"></span></li>
                 </ul>
-                <a href="#" class="not_loggued" data-role="button" data-filename="" id="save_session_button">Sauver l'événement en local</a>
-                <a class="not_loggued" id="bouton_liste_inscrits" href="#page_inscrits" data-iconpos="right" data-role="button" data-icon="arrow-r" title="Liste des inscrits" data-theme="a">Liste des inscrits</a>
+                <div id="charts">
+                    <div id="amphitheatre" class="chart" style="width: 140px; height: 140px;"></div>
+                    <div id="retransmission" class="chart" style="width: 140px; height: 140px;"></div>
+                </div>
+                <a href="#" class="online_data" data-role="button" data-filename="" id="save_session_button">Sauver l'événement en local</a>
+                <a href="#accueil" class="local_data" data-role="button" data-filename="" id="delete_session_button">Supprimer la sauvegarde locale (les données seront perdues)</a>
+                <a id="bouton_liste_inscrits" href="#page_inscrits" data-iconpos="right" data-role="button" data-icon="arrow-r" title="Liste des inscrits" data-theme="a">Liste des inscrits</a>
             </div>
             <!-- FIN CONTENT -->
         </div>
@@ -196,7 +240,7 @@
             
             <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false">
                 <h1>ScanEvent</h1>
-                <a href="#" data-rel="back" data-icon="back" data-iconpos="notext">back</a>
+                <a href="#" data-rel="back" data-icon="back" data-iconpos="notext" id="back-to-session-detail">back</a>
             </div>
          
             <div data-role="content">
@@ -236,11 +280,13 @@
             </div>
 
             <div data-role="footer" data-theme="b" data-position="fixed"  data-tap-toggle="false">
+                <div class="slider_est_venu">
                     <select name="est_venu" id="est_venu" data-role="slider" data-theme="b">
                         <option value="non">Non</option>
                         <option value="oui">Oui</option>
                     </select>
                 </div>
+            </div>
         </div>
          <!-- FIN DETAIL INSCRIT -->
 
