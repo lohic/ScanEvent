@@ -414,7 +414,7 @@ $( document ).on( "pagebeforeshow", "#authentification", function( event ) {
         $.localStorage('password',$("#password").val());
 
         $.ajax({
-            url:'http://www.sciencespo.fr/evenements/api/',
+            url:'https://www.sciencespo.fr/evenements/api/',
             type:'post',
             data:{
                 login:      $("#login").val(),
@@ -460,7 +460,7 @@ $( document ).on( "pagebeforeshow", "#authentification", function( event ) {
         $("#password").val('');
 
         $.ajax({
-            url:'http://www.sciencespo.fr/evenements/api/',
+            url:'https://www.sciencespo.fr/evenements/api/',
             type:'post',
             data:{
                 logout:      true,
@@ -633,7 +633,7 @@ function refreshInscritDetail(){
  */
 function refreshSessionList(){
     $.ajax({
-        url:'http://www.sciencespo.fr/evenements/api/',
+        url:'https://www.sciencespo.fr/evenements/api/',
         type:'GET',
         data:{
             event:          '',
@@ -814,7 +814,7 @@ function refreshSessionDetail(){
         console.log("ON EST EN LIGNE");
 
         $.ajax({
-            url:'http://www.sciencespo.fr/evenements/api/',
+            url:'https://www.sciencespo.fr/evenements/api/',
             type:'get',
             data:{
                 session: id_session
