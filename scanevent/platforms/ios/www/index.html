@@ -94,6 +94,10 @@
                 background:#ff4c00!important;
                 color:#FFFFFF!important;
             }
+
+            #unique_id{
+                font-size: 30px;
+            }
         </style>
                         
         <!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
@@ -114,7 +118,7 @@
             <!-- HEADER -->
             <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false">
                 <h1>ScanEvent</h1>
-                <a href="#authentification" data-iconpos="notext" data-role="button" data-icon="flat-man" title="Authentification" data-transition="slide" class="connected">Authentification</a>
+                <a href="#authentification" data-iconpos="notext" data-role="button" data-icon="flat-man" title="Authentification" class="connected">Authentification</a>
             </div>
 
 
@@ -178,7 +182,7 @@
             <!-- HEADER -->
             <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false"> 
                 <h1>ScanEvent</h1>         
-                <a href="#" data-rel="back" data-icon="back" data-iconpos="notext" data-transition="reverse slide">back</a> 
+                <a href="#" data-rel="back" data-icon="back" data-iconpos="notext">back</a> 
             </div>
 
             <div data-role="content">
@@ -220,11 +224,11 @@
                     <li class="not_loggued"><strong>Projo interne : </strong><span id="retransmission_interne"></span></li>
                     <li class="not_loggued"><strong>Projo externe : </strong><span id="retransmission_externe"></span></li>
                 </ul>
-                <div id="charts">
+                <!--<div id="charts">
                     <div id="amphitheatre" class="chart" style="width: 140px; height: 140px;"></div>
                     <div id="retransmission" class="chart" style="width: 140px; height: 140px;"></div>
-                </div>
-                <a href="#" class="online_data" data-role="button" data-filename="" id="save_session_button">Sauver l'événement en local</a>
+                </div>-->
+                <a href="#accueil" class="online_data" data-role="button" data-filename="" id="save_session_button">Sauver l'événement en local</a>
                 <a href="#accueil" class="local_data" data-role="button" data-filename="" id="delete_session_button">Supprimer la sauvegarde locale (les données seront perdues)</a>
                 <a id="bouton_liste_inscrits" href="#page_inscrits" data-iconpos="right" data-role="button" data-icon="arrow-r" title="Liste des inscrits" data-theme="a">Liste des inscrits</a>
             </div>

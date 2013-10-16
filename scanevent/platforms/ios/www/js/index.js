@@ -129,7 +129,7 @@ function onFSSuccess(fs) {
     $("#deleteFileButton").click(doDeleteFile);*/
     $("#deleteAllFilesButton").click(doDeleteAllFiles);
 
-    console.log( "Got the file system: "+fileSystem.name +"\n" + "root entry name is "+fileSystem.root.name); 
+    //console.log( "Got the file system: "+fileSystem.name +"\n" + "root entry name is "+fileSystem.root.name); 
 
     doDirectoryListing();
 }
@@ -180,7 +180,6 @@ function gotFiles(entries) {
                 .append(
                     $("<a/>")
                     .attr('href','#session_detail')
-                    .data('transition','slide')
                     .text(get_file_session_name(entries[i].name))
                     .append(
                         $("<img/>")
@@ -533,7 +532,6 @@ $( document ).on( "pagebeforeshow", "#page_inscrits", function( event ) {
             .append(
                 $('<a/>')
                 .attr('href','#detail_inscrit')
-                .data('transition','slide')
                 .text(temp[api_id_inscrit].texte)
             )
             .data('lettre',temp[api_id_inscrit].texte.substr(0,1).toUpperCase())
@@ -596,11 +594,15 @@ $( document ).on( "pagebeforeshow", "#detail_inscrit", function( event ) {
  * @return {[type]} [description]
  */
 function refreshInscritDetail(){
-    console.log(id_inscrit);
+    console.log('refreshInscritDetail : '+id_inscrit);
 
-    console.log('ok');
+    var reservation_casque = "Aucun casque n'a été reservé";
 
-    $('#casque').text(          actual_session.liste_inscrits[id_inscrit].casque);
+    if(actual_session.liste_inscrits[id_inscrit].casque){
+        reservation_casque = "UN CASQUE A ÉTÉ RÉSERVÉ";
+    }
+
+    $('#casque').text(          reservation_casque);
     $('#date_scan').text(       actual_session.liste_inscrits[id_inscrit].date_scan);
     $('#entreprise').text(      actual_session.liste_inscrits[id_inscrit].entreprise);
     //$('#est_venu').text(        actual_session.liste_inscrits[id_inscrit].est_venu);
@@ -710,7 +712,6 @@ function refreshSessionList(){
                             .append(
                                 $("<a/>")
                                 .attr('href','#session_detail')
-                                .data('transition','slide')
                                 .data('date',liste_sessions[i].date)
                                 .data('jour',liste_sessions[i].jour)
                                 .text(liste_sessions[i].titre)
@@ -857,7 +858,7 @@ function populate_session(){
     }
 
 
-    var chartOption1 = {
+    /*var chartOption1 = {
         font_color: "#fff",
         fill_color: "#222",
         label_color: "#333",
@@ -875,7 +876,7 @@ function populate_session(){
         stroke_color: "#00ff90",
         radius:30,
         stroke_width:20
-    }
+    }*/
 
 
     var ladate = actual_session.session.date_debut.split('-');
@@ -918,8 +919,8 @@ function populate_session(){
     $('#save_session_button')
     .data('filename', actual_session.session.id+"-"+escape(actual_session.session.titre)+'.txt');
 
-    $('#save_session_button').click(function(e){
 
+    $('#save_session_button').bind('click', function() {
         filename = $('#save_session_button').data('filename');
         //actual_session
         //test={'super':'Ça fonctionne !'}
@@ -929,6 +930,7 @@ function populate_session(){
 
         doSaveFile();
     });
+
     //places_enregistrees: "0"
     //places_enregistrees_visio: "0"
     //statut_inscription: "0"
@@ -944,8 +946,8 @@ function populate_session(){
     $('#save_session_button').css('display','none');
     $('#charts').css('display','none');
 
-    console.log('isAuthenticated : '+isAuthenticated);
-    console.log('islocale        : '+islocale);
+    //console.log('isAuthenticated : '+isAuthenticated);
+    //console.log('islocale        : '+islocale);
 
     if((parseInt(actual_session.session.places_internes_prises) <= 0 && parseInt(actual_session.session.places_externes_prises) <= 0 && parseInt(actual_session.session.places_internes_prises_visio)<= 0 && parseInt(actual_session.session.places_externes_prises_visio) <= 0)){
         console.log('aucune place');
@@ -955,18 +957,18 @@ function populate_session(){
         // et qu'on est ou pas en local
         console.log('des places sont disponibles');
 
-        console.log('isAuthenticated : '+ typeof isAuthenticated);
-        console.log('islocale        : '+ typeof islocale);
+        //console.log('isAuthenticated : '+ typeof isAuthenticated);
+        //console.log('islocale        : '+ typeof islocale);
         
         if( isAuthenticated==true || islocale == 'true'){
             $('#bouton_liste_inscrits').css('display','block');
             $('#charts').css('display','block');
 
-            var amphitheatreChart = new Charts.CircleProgress('amphitheatre', 'AMPHITHÉÂTRE', 80, chartOption1);
+            /*var amphitheatreChart = new Charts.CircleProgress('amphitheatre', 'AMPHITHÉÂTRE', 80, chartOption1);
             var retransmissionChart = new Charts.CircleProgress('retransmission', 'RETRANSMISSION', 60, chartOption2);
 
             amphitheatreChart.draw();
-            retransmissionChart.draw();
+            retransmissionChart.draw();*/
         }
 
         if(islocale == 'false' && isAuthenticated){
@@ -981,7 +983,6 @@ function populate_session(){
 
 // LISTE DES INSCRITS
 $( document ).on( "pagebeforeshow", "#page_inscrits", function( event ) {
-    //update_inscrit();
 
     console.log("LISTING INSCRITS");
     console.log('authentifié ? '+isAuthenticated);
@@ -1015,7 +1016,6 @@ $( document ).on( "pagebeforeshow", "#page_inscrits", function( event ) {
             .append(
                 $('<a/>')
                 .attr('href','#detail_inscrit')
-                .data('transition','slide')
                 .text(temp[api_id_inscrit].texte)
                 .append(
                     $("<img/>")
@@ -1047,7 +1047,7 @@ $( document ).on( "pagebeforeshow", "#page_inscrits", function( event ) {
         id_inscrit = $(this).data('id');
         //refreshInscritDetail();
         //
-        console.log($(this).data('id')+ ' ' + id_inscrit);
+        //console.log($(this).data('id')+ ' ' + id_inscrit);
     });
 
     $('#scan-button')
@@ -1059,17 +1059,6 @@ $( document ).on( "pagebeforeshow", "#page_inscrits", function( event ) {
         cordova.plugins.barcodeScanner.scan(scannerSuccess,scannerFailure);
     });
 
-    //update_inscrit();
-} );
-
-
-
-// DETAIL D'UNE SESSION
-$( document ).on( "pagebeforeshow", "#detail_inscrit", function( event ) {
-    console.log("DÉTAIL INSCRIT");
-    console.log('authentifié ? '+isAuthenticated);
-
-    refreshInscritDetail(); 
 } );
 
 
@@ -1103,7 +1092,14 @@ function scannerSuccess(result) {
 
                 id_inscrit = actual_session.liste_inscrits[api_id_inscrit].id;
 
-                message = "Bienvenue "+actual_session.liste_inscrits[api_id_inscrit].prenom+" "+actual_session.liste_inscrits[api_id_inscrit].nom.toUpperCase();
+                var reservation_casque = "Aucun casque n'a été reservé";
+
+                if(actual_session.liste_inscrits[id_inscrit].casque){
+                    reservation_casque = "UN CASQUE A ÉTÉ RÉSERVÉ";
+                }
+
+                message = "Bienvenue "+actual_session.liste_inscrits[api_id_inscrit].prenom+" "+actual_session.liste_inscrits[api_id_inscrit].nom.toUpperCase()+"\n"+reservation_casque;
+
                 actual_session.liste_inscrits[api_id_inscrit].est_venu = 1;
                 isOK = true;
 
@@ -1138,14 +1134,21 @@ function scannerSuccess(result) {
 
 function update_inscrit(){
     if(id_inscrit != undefined){
-        console.log(id_inscrit);
-        actual_session.liste_inscrits[id_inscrit].date_scan = new Date().date2mysql();
+        console.log("id_inscrit : "+id_inscrit);
+
+        var date_scan;
 
         if( actual_session.liste_inscrits[id_inscrit].est_venu ==1 ){
             icone = 'images/vert@2x.png';
+            var now = new Date;
+            date_scan = now.date2mysql();
         }else{
             icone = 'images/neutre@2x.png';
+            date_scan= 0;
         }
+
+        actual_session.liste_inscrits[id_inscrit].date_scan = date_scan;
+        $("#date_scan").text( date_scan );
 
         $("#listing_inscrits #inscrit-"+id_inscrit).find('img').attr('src',icone);
     }   
@@ -1197,13 +1200,14 @@ String.prototype.capitalize = function() {
  * @return {[type]} [description]
  */
 Date.prototype.date2mysql = function(){
-    annee   = this.getFullYear();
-    mois    = this.getMonth() + 1 <10 ? "0"+(this.getMonth() + 1): this.getMonth() + 1;
-    jour    = this.getDate() <10      ? "0"+this.getDate()       : this.getDate();
-    heure   = this.getHours()<10      ? "0"+this.getHours()      : this.getHours();
-    minute  = this.getMinutes()<10    ? "0"+this.getMinutes()    : this.getMinutes();
-    seconde = this.getSeconds()<10    ? "0"+this.getSeconds()    : this.getSeconds();
+    var _annee   = this.getFullYear();
+    var _mois    = this.getMonth() + 1 <10 ? "0"+(this.getMonth() + 1): this.getMonth() + 1;
+    var _jour    = this.getDate() <10      ? "0"+this.getDate()       : this.getDate();
+    var _heure   = this.getHours()<10      ? "0"+this.getHours()      : this.getHours();
+    var _minute  = this.getMinutes()<10    ? "0"+this.getMinutes()    : this.getMinutes();
+    var _seconde = this.getSeconds()<10    ? "0"+this.getSeconds()    : this.getSeconds();
 
-    return annee+"-"+mois+"-"+jour+" "+heure+":"+minute+":"+seconde;
+    return _annee+"-"+_mois+"-"+_jour+" "+_heure+":"+_minute+":"+_seconde;
 }
+
 
