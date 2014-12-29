@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>9F80DB22-3AF7-49F1-BAF5-EFBC1924EBD3</string>
+	<string>99B71BCA-10AC-41B4-9425-040683528D83</string>
 	<key>IDESourceControlProjectName</key>
 	<string>ScanEvent</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>A5ED6284-AEFC-4C7A-96DD-7E0E4636AD2A</key>
+		<key>9B0D378E5759CA8E5C9869828089480F15ACEC06</key>
 		<string>https://github.com/formidable-studio/scanevent.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>scanevent/platforms/ios/ScanEvent.xcodeproj/project.xcworkspace</string>
+	<string>scanevent/platforms/ios/ScanEvent.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>A5ED6284-AEFC-4C7A-96DD-7E0E4636AD2A</key>
+		<key>9B0D378E5759CA8E5C9869828089480F15ACEC06</key>
 		<string>../../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/formidable-studio/scanevent.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>A5ED6284-AEFC-4C7A-96DD-7E0E4636AD2A</string>
+	<string>9B0D378E5759CA8E5C9869828089480F15ACEC06</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>A5ED6284-AEFC-4C7A-96DD-7E0E4636AD2A</string>
+			<string>9B0D378E5759CA8E5C9869828089480F15ACEC06</string>
 			<key>IDESourceControlWCCName</key>
-			<string>Site_SCIENCESPO_SCANEVENT</string>
+			<string>scanevent</string>
 		</dict>
 	</array>
 </dict>

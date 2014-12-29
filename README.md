@@ -1,15 +1,12 @@
-scanevent
+Scanevent
 =========
 
 Application de scan de billets
 
-
-
-
-###Liens pour l'application ScanEvent-2
+##Liens pour l'application ScanEvent-2
 - à bouger dans le répertoire github de l'application
 
-Liens :
+##Liens :
 
 - http://cordova.apache.org/docs/en/2.6.0/guide_getting-started_ios_index.md.html#Getting%20Started%20with%20iOS
 - http://stackoverflow.com/questions/15661034/initialize-phonegap-plugin-barcodescanner-in-ios
@@ -17,7 +14,7 @@ Liens :
 - http://jquerymobile.com
 
 
-POUR LA GESTION DES LONGUES LISTES:
+##POUR LA GESTION DES LONGUES LISTES:
 - http://jquerymobile.com/demos/1.2.0/docs/pages/phonegap.html
 - https://github.com/jquery/jquery-mobile/issues/4340
 - http://jquerymobile.com/demos/1.1.0/docs/lists/lists-inset.html
@@ -27,16 +24,15 @@ POUR LA GESTION DES LONGUES LISTES:
 - http://dcarrith.github.io/jquery.mobile.lazyloader/
 
 
-<<<<<<< HEAD
-
 `net.formidable-studio.scanevent2cordova`
 
 
-Sur les problèmes de requêtes avec LEFT OUTER JOIN:
+##Sur les problèmes de requêtes avec LEFT OUTER JOIN:
 - http://www.developpez.net/forums/d39571/bases-donnees/mysql/requetes/probleme-performance-avec-left-outer-join/
-> dev_ScanEvent
 
-JSON ou JSONP avec serveur distant :
+?? dev_ScanEvent
+
+##JSON ou JSONP avec serveur distant :
 - http://stackoverflow.com/questions/9048213/what-is-the-best-way-to-communicate-with-a-server-using-phonegap
 - http://stackoverflow.com/questions/613962/is-jsonp-safe-to-use
 - http://remysharp.com/2007/10/08/what-is-jsonp/
@@ -46,12 +42,12 @@ JSON ou JSONP avec serveur distant :
 - http://stackoverflow.com/questions/3506208/jquery-ajax-cross-domain
 
 
-JQUERY MOBILE façon iOS 7:
+##JQUERY MOBILE façon iOS 7:
 - http://ququplay.github.io/jquery-mobile-flat-ui-theme/
 - https://github.com/ququplay/jquery-mobile-flat-ui-theme
 
-Façon iOS 6 et moins :
+##Façon iOS 6 et moins :
 - http://taitems.github.io/iOS-Inspired-jQuery-Mobile-Theme/
 
-Template pour iOS 7 :
+##Template pour iOS 7 :
 http://www.queness.com/post/14386/latest-ios7-icon-templates-and-ui-kits

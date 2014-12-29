@@ -8,10 +8,17 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.core.dialogs/www/notification.js",
-        "id": "org.apache.cordova.core.dialogs.notification",
-        "merges": [
-            "navigator.notification"
+        "file": "plugins/org.apache.cordova.console/www/console-via-logger.js",
+        "id": "org.apache.cordova.console.console",
+        "clobbers": [
+            "console"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.console/www/logger.js",
+        "id": "org.apache.cordova.console.logger",
+        "clobbers": [
+            "cordova.logger"
         ]
     },
     {
@@ -141,24 +148,10 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.core.console/www/console-via-logger.js",
-        "id": "org.apache.cordova.core.console.console",
-        "clobbers": [
-            "console"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.core.console/www/logger.js",
-        "id": "org.apache.cordova.core.console.logger",
-        "clobbers": [
-            "cordova.logger"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.splashscreen/www/splashscreen.js",
-        "id": "org.apache.cordova.splashscreen.SplashScreen",
-        "clobbers": [
-            "navigator.splashscreen"
+        "file": "plugins/org.apache.cordova.dialogs/www/notification.js",
+        "id": "org.apache.cordova.dialogs.notification",
+        "merges": [
+            "navigator.notification"
         ]
     },
     {
@@ -175,6 +168,24 @@ module.exports = [
         "clobbers": [
             "Connection"
         ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.splashscreen/www/splashscreen.js",
+        "id": "org.apache.cordova.splashscreen.SplashScreen",
+        "clobbers": [
+            "navigator.splashscreen"
+        ]
     }
-]
+];
+module.exports.metadata = 
+// TOP OF METADATA
+{
+    "com.phonegap.plugins.barcodescanner": "2.0.0",
+    "org.apache.cordova.console": "0.2.11",
+    "org.apache.cordova.core.file": "0.2.1",
+    "org.apache.cordova.dialogs": "0.2.10",
+    "org.apache.cordova.network-information": "0.2.13",
+    "org.apache.cordova.splashscreen": "0.3.4"
+}
+// BOTTOM OF METADATA
 });
