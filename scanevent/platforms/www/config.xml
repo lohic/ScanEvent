@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="net.formidable-studio.scanevent" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>ScanEvent</name>
+    <description>
+        Application permettant de scanner les billets avec un QRcode qui permettent de rentrer dans les événements de Sciences Po.
+    </description>
+    <author email="contact@formidable-studio.net" href="http://www.formidable-studio.net">
+        Formidable Studio Paris
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <preference name="fullscreen" value="true" />
+    <preference name="webviewbounce" value="true" />
+</widget>

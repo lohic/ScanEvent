@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+            
+        <style>
+            
+        </style>
+        
+        <!-- iPad/iPhone specific css below, add after your main css >
+         <link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />
+         <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />
+         -->
+        <!--<link rel="stylesheet" href="css/jquery.mobile-1.3.2.css" />-->
+        <link rel="stylesheet" href="generated/jquery.mobile.flatui.min.css" />
+
+        <style>
+
+            .ui-header{
+                padding-top:20px;
+            }
+            .ui-header .ui-btn{
+                top:30px;
+            }
+
+            .ui-btn-icon-notext .ui-btn-inner .ui-icon {
+                margin: 4px 0px 1px 4px;
+            }
+
+            a{
+                text-decoration: none;
+            }
+
+            #est_venu_slider .ui-slider-switch { width: 9em }
+
+            @font-face {
+              font-family: 'proximanova';
+              font-style: normal;
+              font-weight: 400;
+              src: local('Proxima Nova Extra Condensed Thin'),
+                url(generated/proxima/ProximaNovaExCn-Thin.otf) format('opentype');
+            }
+
+            *{
+                font-family:'proximanova'!important;
+                /*line-height: 18px;
+                font-size:18px;*/
+            }
+            h1,h2,h3,h4,h5,h6{
+                text-transform: uppercase;
+            }
+
+            .ui-listview .ui-li-icon{
+                top : 0.7em;
+            }
+
+            .ui-li-divider{
+                text-transform: uppercase;
+            }
+
+            .local_data{
+                text-align: center;
+                background:#00ff90;
+                color:#000;
+                padding: 3px 0 1px;
+                border-radius: 4px;
+                text-transform: none;
+            }
+            .online_data{
+                text-align: center;
+                background:#ff4c00;
+                color:#FFF;
+                padding: 3px 0 1px;
+                border-radius: 4px;
+                text-transform: none;
+            }
+
+            .chart{
+                display:inline-block;
+            }
+
+            .slider_est_venu{
+                text-align: center;
+            }
+        
+            .slider_est_venu .ui-slider-label-a{
+                background:#00ff90!important;
+                color:#000000!important;
+            }
+
+            .slider_est_venu .ui-slider-label-b{
+                background:#ff4c00!important;
+                color:#FFFFFF!important;
+            }
+
+            #unique_id{
+                font-size: 30px;
+            }
+        </style>
+                        
+        <!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery-1.10.2.min.js"></script>
+        <!--<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>-->
+        <script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.3.2.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/jquery.storage.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/raphael-min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/charts.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
+
+    </head>
+    <body>
+
+        <!-- ACCUEIL -->
+        <div data-role="page" data-theme="c" id="accueil">
+            <!-- HEADER -->
+            <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false">
+                <h1>ScanEvent</h1>
+                <a href="#authentification" data-iconpos="notext" data-role="button" data-icon="flat-man" title="Authentification" class="connected">Authentification</a>
+            </div>
+
+
+            <div data-role="content">
+                <!--<button id="addFileButton">Ajout d'un fichier test</button>
+                <button id="readFileButton">Lire le fichier test</button>
+                <button id="metadataFileButton">Récupérer les métadatas</button>
+                <button id="deleteFileButton">Supprimer le fichier test</button>
+                <button id="dirListingButton">Mettre à jour le répertoire</button>-->
+                <button id="deleteAllFilesButton">Supprimer les sessions locales</button>
+
+                <!-- contenu -->
+                <ul data-role="listview" data-inset="true" id="saved_sessions">
+                    <li data-role="list-divider" data-theme="a" role="heading">Conférences mémorisées :</li>
+                </ul>
+
+                <h2 class="not_connected" style="text-align:center;">Vous n’êtes pas connecté !</h2>
+
+                <div class="connected">
+                    <form>
+                        <fieldset data-role="controlgroup" data-mini="false">
+                            <label for="id_organisme">Organisme :</label>
+                            <select id="id_organisme" name="id_organisme" data-theme="a">
+                            </select>
+                            <label for="year_event">Année :</label>
+                            <select id="year_event" name="year_event" data-theme="b">
+                            </select>
+                            <label for="month_event">Mois :</label>
+                            <select id="month_event" name="month_event" data-theme="b">
+                                <option value="1">Janvier</option>
+                                <option value="2">Février</option>
+                                <option value="3">Mars</option>
+                                <option value="4">Avril</option>
+                                <option value="5">Mai</option>
+                                <option value="6">Juin</option>
+                                <option value="7">Juillet</option>
+                                <option value="8">Août</option>
+                                <option value="9">Septembre</option>
+                                <option value="10">Octobre</option>
+                                <option value="11">Novembre</option>
+                                <option value="12">Décembre</option>
+                            </select>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <ul data-role="listview" data-autodividers="true" data-inset="true" data-filter="false" data-divider-theme="a" id="liste_sessions" class="connected">
+                </ul>
+
+
+            </div>
+
+        </div>
+        <!-- FIN ACCUEIL -->
+
+
+
+
+        <!-- AUTHENTIFICATION -->
+        <div data-role="page" data-theme="c" id="authentification">
+            <!-- HEADER -->
+            <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false"> 
+                <h1>ScanEvent</h1>         
+                <a href="#" data-rel="back" data-icon="back" data-iconpos="notext">back</a> 
+            </div>
+
+            <div data-role="content">
+                <h3>Authentification</h3>
+                <ul data-role="listview" data-inset="true">
+                    <li><input placeholder="Identifiant" type="text" value="" id="login" name="login"/></li>
+                    <li><input placeholder="Mot de passe" type="password" value="" id="password" name="password"/></li>
+                </ul>
+                <a id="login_button" data-iconpos="right" data-role="button" data-icon="arrow-r" title="S'identifier'" data-theme="a">S'identifier</a>
+                <a id="logout_button" data-iconpos="right" data-role="button" data-icon="arrow-r" title="Se déconnecter" data-theme="a">Se déconnecter</a>
+            </div>
+
+        </div>
+        <!-- FIN AUTHENTIFICATION -->
+
+
+
+
+        <!-- DETAIL SESSION -->
+        <div data-role="page" data-theme="c" id="session_detail">
+            <!-- HEADER -->
+            <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false">
+                <h1>ScanEvent</h1>
+                <a href="#" data-rel="back" data-icon="back" data-iconpos="notext">back</a>           
+            </div>
+            <!-- FIN HEADER -->
+
+            <!-- DEBUT CONTENT -->
+            <div data-role="content">
+                <h3 class="local_data">→ Données locales ←</h3>
+                <h3 class="online_data">→ Données en lignes ←</h3>
+                <h2 id="titre_session"></h2>
+                <ul data-role="listview" data-inset="true">
+                    <li><strong>Date : </strong><span id="date_session"></span></li>
+                    <li><strong>Horaire : </strong><span id="horaire_session"></span></li>
+                    <li id="lieu"></li>
+                    <li class="not_loggued"><strong>Amphi interne : </strong><span id="amphi_interne"></span></li>
+                    <li class="not_loggued"><strong>Amphi externe : </strong><span id="amphi_externe"></span></li>
+                    <li class="not_loggued"><strong>Projo interne : </strong><span id="retransmission_interne"></span></li>
+                    <li class="not_loggued"><strong>Projo externe : </strong><span id="retransmission_externe"></span></li>
+                </ul>
+                <!--<div id="charts">
+                    <div id="amphitheatre" class="chart" style="width: 140px; height: 140px;"></div>
+                    <div id="retransmission" class="chart" style="width: 140px; height: 140px;"></div>
+                </div>-->
+                <a href="#accueil" class="online_data" data-role="button" data-filename="" id="save_session_button">Sauver l'événement en local</a>
+                <a href="#accueil" class="local_data" data-role="button" data-filename="" id="delete_session_button">Supprimer la sauvegarde locale (les données seront perdues)</a>
+                <a id="bouton_liste_inscrits" href="#page_inscrits" data-iconpos="right" data-role="button" data-icon="arrow-r" title="Liste des inscrits" data-theme="a">Liste des inscrits</a>
+            </div>
+            <!-- FIN CONTENT -->
+        </div>
+        <!-- FIN DETAIL SESSION -->
+
+    
+
+
+        <!-- LISTING INSCRITS -->
+        <div data-role="page" data-theme="c" id="page_inscrits">
+            
+            <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false">
+                <h1>ScanEvent</h1>
+                <a href="#" data-rel="back" data-icon="back" data-iconpos="notext" id="back-to-session-detail">back</a>
+            </div>
+         
+            <div data-role="content">
+                <ul id="listing_inscrits" data-role="listview" data-autodividers="true" data-inset="false" data-filter="true" data-divider-theme="a">
+                </ul>
+            </div>
+         
+            <div data-role="footer" data-theme="b" data-position="fixed" data-tap-toggle="false" style="text-align: center">
+                <a href="#" data-role="button" title="Scan" id="scan-button" data-align="center" data-inline="true"><img src="images/Scan-button.png" width="45" height="45" /></a>
+            </div>
+        
+        </div>
+         <!-- FIN LISTING INSCRITS -->
+
+
+
+
+        <!-- DETAIL INSCRIT -->
+        <div data-role="page" data-theme="c" id="detail_inscrit">
+            
+            <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false">
+                <h1>ScanEvent</h1>
+                <a href="#" data-rel="back" data-icon="back" data-iconpos="notext">back</a>
+            </div>
+         
+            <div data-role="content">
+                <h1><span style="text-transform: capitalize" id="prenom"></span> <span style="text-transform: uppercase" id="nom"></span></h1>
+                <ul data-role="listview" data-inset="true">
+                    <li>Casque : <span id="casque"></span></li>
+                    <li>Date_scan : <span id="date_scan"></span></li>
+                    <li>Entreprise : <span id="entreprise"></span></li>
+                    <li>Fonction : <span id="fonction"></span></li>
+                    <li>Type d'inscription : <span id="type_inscription"></span></li>
+                    <li>Identifiant unique :<li>
+                    <li><h3 id="unique_id" style="text-align:center"></h3></li>
+                </ul>
+            </div>
+
+            <div data-role="footer" data-theme="b" data-position="fixed"  data-tap-toggle="false">
+                <div class="slider_est_venu">
+                    <select name="est_venu" id="est_venu" data-role="slider" data-theme="b">
+                        <option value="non">Non</option>
+                        <option value="oui">Oui</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+         <!-- FIN DETAIL INSCRIT -->
+
+
+
+        <!-- RESULTAT DU SCAN-->
+        <div data-role="page" id="scanresult">
+
+            <div data-role="header" data-theme="a" data-tap-toggle="false">
+                <h1>ScanEvent</h1>
+                <a href="#" data-rel="back" data-icon="back" data-iconpos="notext">back</a>
+            </div>
+
+            <div data-role="content" data-theme="a">       
+                <p><a href="#conference" data-rel="back" data-role="button" data-inline="true" data-icon="back">Back to scan</a></p> 
+            </div>
+            
+            <div data-role="footer" data-tap-toggle="false">
+                <h4>Page Footer</h4>
+            </div>
+        </div>
+        <!-- FIN RESULTAT DU SCAN-->
+
+    </body>
+</html>
+
